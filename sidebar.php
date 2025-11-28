@@ -1,6 +1,6 @@
 <?php
 /**
- * The sidebar template for WritgoCMS
+ * The sidebar containing the main widget area
  *
  * @package WritgoCMS
  */

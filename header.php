@@ -1,6 +1,6 @@
 <?php
 /**
- * The header template for WritgoCMS
+ * The header for the WritgoCMS theme
  *
  * @package WritgoCMS
  */
