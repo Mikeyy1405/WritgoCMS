@@ -29,7 +29,7 @@ get_header();
 					printf(
 						/* translators: %s: search query. */
 						esc_html__( 'Search Results for: %s', 'writgocms' ),
-						'<span>' . get_search_query() . '</span>'
+						'<span>' . esc_html( get_search_query() ) . '</span>'
 					);
 					?>
 				</h1>

@@ -157,8 +157,8 @@ add_action( 'widgets_init', 'writgocms_widgets_init' );
 function writgocms_comment_callback( $comment, $args, $depth ) {
     $tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
     ?>
-    <<?php echo esc_html( $tag ); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent', $comment ); ?>>
-        <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+    <<?php echo esc_html( $tag ); ?> id="comment-<?php echo esc_attr( get_comment_ID() ); ?>" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent', $comment ); ?>>
+        <article id="div-comment-<?php echo esc_attr( get_comment_ID() ); ?>" class="comment-body">
             <footer class="comment-meta">
                 <div class="comment-author vcard">
                     <?php
