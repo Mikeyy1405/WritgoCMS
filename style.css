@@ -15,40 +15,40 @@ Tags: blog, portfolio, e-commerce, custom-logo, custom-menu, featured-images, fu
 */
 
 /* ==========================================================================
-   CSS Variables - Modern Design System
+   CSS Variables - Modern Dark Design System
    ========================================================================== */
 :root {
-    /* Modern Gradient Colors */
-    --color-primary: #667eea;
-    --color-primary-dark: #5568d3;
-    --color-primary-light: #818cf8;
-    --color-secondary: #764ba2;
-    --color-secondary-dark: #5e3d82;
-    --color-accent: #f093fb;
-    --color-accent-alt: #06b6d4;
+    /* Primary Blue & Orange Colors - NO PURPLE! */
+    --color-primary: #1877F2;
+    --color-primary-dark: #1565c0;
+    --color-primary-light: #42a5f5;
+    --color-secondary: #f97316;
+    --color-secondary-dark: #ea580c;
+    --color-accent: #fb923c;
+    --color-accent-alt: #38bdf8;
     
-    /* Gradient Definitions */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    /* Gradient Definitions - Blue to Orange */
+    --gradient-primary: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    --gradient-secondary: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+    --gradient-accent: linear-gradient(135deg, #1877F2 0%, #38bdf8 100%);
+    --gradient-dark: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
     
-    /* Text Colors */
-    --color-text: #2d3748;
-    --color-text-light: #718096;
-    --color-text-lighter: #a0aec0;
-    --color-heading: #1a202c;
+    /* Text Colors - Light for Dark Theme */
+    --color-text: #f1f5f9;
+    --color-text-light: #94a3b8;
+    --color-text-lighter: #64748b;
+    --color-heading: #f8fafc;
     
-    /* Background Colors */
-    --color-bg: #ffffff;
-    --color-bg-alt: #f7fafc;
-    --color-bg-dark: #edf2f7;
-    --color-bg-darker: #e2e8f0;
+    /* Background Colors - Dark Theme */
+    --color-bg: #0f172a;
+    --color-bg-alt: #1e293b;
+    --color-bg-dark: #020617;
+    --color-bg-darker: #0f172a;
     
-    /* Border Colors */
-    --color-border: #e2e8f0;
-    --color-border-light: #edf2f7;
+    /* Border Colors - Dark Theme */
+    --color-border: #334155;
+    --color-border-light: #1e293b;
     
     /* Functional Colors */
     --color-success: #48bb78;
@@ -116,21 +116,21 @@ Tags: blog, portfolio, e-commerce, custom-logo, custom-menu, featured-images, fu
     --radius-2xl: 1.5rem;
     --radius-full: 9999px;
     
-    /* Modern Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.3);
-    --shadow-glow-lg: 0 0 40px rgba(102, 126, 234, 0.4);
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
-    --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+    /* Modern Shadows - Blue Glow for Dark Theme */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    --shadow-glow: 0 0 20px rgba(24, 119, 242, 0.3);
+    --shadow-glow-lg: 0 0 40px rgba(24, 119, 242, 0.4);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 12px 40px rgba(24, 119, 242, 0.2);
     
-    /* Glass morphism */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    /* Glass morphism - Dark Theme */
+    --glass-bg: rgba(30, 41, 59, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     
     /* Transitions */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -239,18 +239,20 @@ pre, code {
 }
 
 code {
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg-alt);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
+    color: var(--color-primary);
 }
 
 pre {
-    background-color: var(--color-heading);
-    color: var(--color-bg);
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
     padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
     overflow-x: auto;
     margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--color-border);
 }
 
 pre code {
@@ -368,14 +370,14 @@ th {
 
 /* Scrolled header state */
 .site-header.is-scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-sm) 0;
 }
 
-/* Non-front-page header */
+/* Non-front-page header - Dark Theme */
 body:not(.is-front-page) .site-header {
     background-color: var(--color-bg);
     box-shadow: var(--shadow-sm);
@@ -511,7 +513,7 @@ body:not(.is-front-page) .site-header .main-navigation ul a {
     background-color: var(--color-heading);
 }
 
-/* Non-front-page hamburger color */
+/* Non-front-page hamburger color - Dark Theme */
 body:not(.is-front-page) .menu-toggle .hamburger,
 body:not(.is-front-page) .menu-toggle .hamburger::before,
 body:not(.is-front-page) .menu-toggle .hamburger::after,
@@ -540,7 +542,7 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
     padding: 0;
 }
 
-/* Mobile Menu - Slide from right */
+/* Mobile Menu - Slide from right (Dark Theme) */
 .main-navigation.toggled ul {
     display: flex;
     flex-direction: column;
@@ -549,7 +551,7 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
     right: 0;
     bottom: 0;
     width: min(85vw, 320px);
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-alt);
     box-shadow: var(--shadow-2xl);
     padding: calc(80px + var(--spacing-xl)) var(--spacing-lg) var(--spacing-xl);
     animation: slideInRight var(--transition-normal) ease-out;
@@ -591,7 +593,7 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
 
 .main-navigation.toggled ul li {
     margin: 0;
-    border-bottom: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .main-navigation.toggled ul li:last-child {
@@ -611,7 +613,7 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
 
 .main-navigation.toggled ul a:hover {
     color: var(--color-primary);
-    background-color: var(--color-bg-alt);
+    background-color: var(--color-bg);
     padding-left: var(--spacing-md);
 }
 
@@ -654,18 +656,18 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
     .site-header.is-scrolled .main-navigation ul a:hover,
     .site-header.is-scrolled .main-navigation ul .current-menu-item a,
     .site-header.is-scrolled .main-navigation ul .current_page_item a {
-        background-color: var(--color-bg-alt);
+        background-color: var(--color-bg);
         color: var(--color-primary);
     }
     
-    /* Dropdown Menu */
+    /* Dropdown Menu - Dark Theme */
     .main-navigation ul ul {
         display: none;
         position: absolute;
         top: 100%;
         left: 0;
         min-width: 220px;
-        background-color: var(--color-bg);
+        background-color: var(--color-bg-alt);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-xl);
@@ -687,7 +689,7 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
     }
     
     .main-navigation ul ul a:hover {
-        background-color: var(--color-bg-alt);
+        background-color: var(--color-bg);
         color: var(--color-primary);
     }
 }
@@ -711,9 +713,9 @@ body:not(.is-front-page) .menu-toggle .hamburger::after,
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse at 20% 80%, rgba(240, 147, 251, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(118, 75, 162, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+        radial-gradient(ellipse at 20% 80%, rgba(249, 115, 22, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(24, 119, 242, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(24, 119, 242, 0.2) 0%, transparent 70%);
     animation: heroGlow 10s ease-in-out infinite alternate;
 }
 
@@ -891,20 +893,21 @@ input[type="submit"] {
     min-height: 40px;
 }
 
-/* Primary Button with Gradient */
+/* Primary Button with Blue */
 .btn-primary,
 button[type="submit"],
 input[type="submit"] {
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.35);
 }
 
 .btn-primary:hover,
 button[type="submit"]:hover,
 input[type="submit"]:hover {
+    background: var(--color-primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.45);
     color: #fff;
 }
 
@@ -912,16 +915,16 @@ input[type="submit"]:hover {
     transform: translateY(0);
 }
 
-/* Secondary Button */
+/* Secondary Button - Orange */
 .btn-secondary {
-    background-color: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    background-color: var(--color-secondary);
+    color: #fff;
+    border: 2px solid var(--color-secondary);
 }
 
 .btn-secondary:hover {
-    background: var(--gradient-primary);
-    border-color: transparent;
+    background: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
     color: #fff;
     transform: translateY(-2px);
 }
@@ -988,7 +991,7 @@ input[type="submit"]:hover {
 .section-badge {
     display: inline-block;
     padding: var(--spacing-xs) var(--spacing-md);
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     color: #fff;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
@@ -1079,7 +1082,7 @@ input[type="submit"]:hover {
 }
 
 .feature-card {
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-alt);
     padding: var(--spacing-xl);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card);
@@ -1087,6 +1090,7 @@ input[type="submit"]:hover {
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
+    border: 1px solid var(--color-border);
 }
 
 .feature-card::before {
@@ -1104,7 +1108,7 @@ input[type="submit"]:hover {
 
 .feature-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-card-hover);
+    box-shadow: var(--shadow-card-hover), var(--shadow-glow);
 }
 
 .feature-card:hover::before {
@@ -1123,11 +1127,11 @@ input[type="submit"]:hover {
     justify-content: center;
     width: 64px;
     height: 64px;
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     border-radius: var(--radius-xl);
     color: #fff;
     font-size: var(--font-size-2xl);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);
     transition: transform var(--transition-normal);
 }
 
@@ -1227,12 +1231,13 @@ input[type="submit"]:hover {
     align-items: center;
     gap: var(--spacing-md);
     padding: var(--spacing-md) var(--spacing-lg);
-    background: var(--color-bg);
+    background: var(--color-bg-alt);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-sm);
     animation: float 6s ease-in-out infinite;
+    border: 1px solid var(--color-border);
 }
 
 .services-card-icon {
@@ -1241,7 +1246,7 @@ input[type="submit"]:hover {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     border-radius: var(--radius-lg);
     color: #fff;
 }
@@ -1301,8 +1306,8 @@ input[type="submit"]:hover {
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse at 30% 70%, rgba(240, 147, 251, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 30%, rgba(102, 126, 234, 0.2) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 70%, rgba(249, 115, 22, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(24, 119, 242, 0.2) 0%, transparent 50%);
 }
 
 .stats-grid {
@@ -1378,12 +1383,12 @@ input[type="submit"]:hover {
 }
 
 .testimonial-card {
-    background: var(--color-bg);
+    background: var(--color-bg-alt);
     padding: var(--spacing-xl);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card);
     transition: all var(--transition-normal);
-    border: 1px solid var(--color-border-light);
+    border: 1px solid var(--color-border);
 }
 
 .testimonial-card:hover {
@@ -1416,7 +1421,7 @@ input[type="submit"]:hover {
     width: 48px;
     height: 48px;
     border-radius: var(--radius-full);
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1454,7 +1459,7 @@ input[type="submit"]:hover {
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse at 20% 80%, rgba(240, 147, 251, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(249, 115, 22, 0.3) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
@@ -1546,7 +1551,7 @@ article.page {
 }
 
 .entry-thumbnail-placeholder {
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1594,6 +1599,27 @@ article.page {
     display: inline-flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
+}
+
+/* Category Badge Styling - Blue */
+.cat-links a,
+.entry-meta .cat-links a {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-primary);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    transition: all var(--transition-fast);
+}
+
+.cat-links a:hover,
+.entry-meta .cat-links a:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
 }
 
 .edit-link {
@@ -1679,17 +1705,17 @@ article.page {
 }
 
 .post-card {
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border-light);
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     overflow: hidden;
     transition: all var(--transition-normal);
 }
 
 .post-card:hover {
-    box-shadow: var(--shadow-card-hover);
+    box-shadow: var(--shadow-card-hover), var(--shadow-glow);
     transform: translateY(-4px);
-    border-color: transparent;
+    border-color: var(--color-primary);
 }
 
 .post-card .entry-thumbnail {
@@ -1767,7 +1793,7 @@ article.page {
     min-width: 44px;
     height: 44px;
     padding: 0 var(--spacing-md);
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-alt);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     font-weight: var(--font-weight-medium);
@@ -1779,7 +1805,7 @@ article.page {
 .nav-links .page-numbers:hover,
 .pagination .page-numbers.current,
 .nav-links .page-numbers.current {
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     border-color: transparent;
     color: #fff;
     transform: translateY(-2px);
@@ -1792,6 +1818,7 @@ article.page {
     padding: var(--spacing-lg);
     background-color: var(--color-bg-alt);
     border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
 }
 
 .widget {
@@ -1846,6 +1873,8 @@ article.page {
     border-right: none;
     border-radius: var(--radius-md) 0 0 var(--radius-md);
     font-size: var(--font-size-base);
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
 
 .widget_search .search-field:focus {
@@ -1883,10 +1912,10 @@ article.page {
 }
 
 /* ==========================================================================
-   Footer - Modern Design
+   Footer - Modern Dark Design
    ========================================================================== */
 .site-footer {
-    background: var(--gradient-dark);
+    background: var(--color-bg-dark);
     color: rgba(255, 255, 255, 0.8);
     margin-top: auto;
     position: relative;
@@ -1901,8 +1930,8 @@ article.page {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(ellipse at 20% 0%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 100%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 0%, rgba(24, 119, 242, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -2052,7 +2081,7 @@ article.page {
 }
 
 .social-links a:hover {
-    background: var(--gradient-primary);
+    background: var(--color-primary);
     color: #fff;
     transform: translateY(-3px);
 }
@@ -2076,7 +2105,8 @@ select {
     border-radius: var(--radius-md);
     font-size: var(--font-size-base);
     font-family: inherit;
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -2092,7 +2122,7 @@ textarea:focus,
 select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.25);
 }
 
 textarea {

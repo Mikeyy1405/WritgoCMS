@@ -11,43 +11,53 @@
             "palette": [
                 {
                     "slug": "primary",
-                    "color": "#6366f1",
-                    "name": "Primary"
+                    "color": "#1877F2",
+                    "name": "Primary Blue"
                 },
                 {
                     "slug": "primary-dark",
-                    "color": "#4f46e5",
+                    "color": "#1565c0",
                     "name": "Primary Dark"
                 },
                 {
                     "slug": "primary-light",
-                    "color": "#818cf8",
+                    "color": "#42a5f5",
                     "name": "Primary Light"
                 },
                 {
                     "slug": "secondary",
-                    "color": "#8b5cf6",
-                    "name": "Secondary"
+                    "color": "#f97316",
+                    "name": "Secondary Orange"
                 },
                 {
                     "slug": "accent",
-                    "color": "#06b6d4",
-                    "name": "Accent"
+                    "color": "#fb923c",
+                    "name": "Accent Orange"
                 },
                 {
                     "slug": "dark",
-                    "color": "#1f2937",
-                    "name": "Dark"
+                    "color": "#0f172a",
+                    "name": "Dark Background"
                 },
                 {
-                    "slug": "light",
-                    "color": "#f9fafb",
-                    "name": "Light"
+                    "slug": "darker",
+                    "color": "#020617",
+                    "name": "Darker Background"
                 },
                 {
-                    "slug": "white",
-                    "color": "#ffffff",
-                    "name": "White"
+                    "slug": "card",
+                    "color": "#1e293b",
+                    "name": "Card Background"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#f1f5f9",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#94a3b8",
+                    "name": "Text Secondary"
                 },
                 {
                     "slug": "success",
@@ -68,13 +78,18 @@
             "gradients": [
                 {
                     "slug": "primary-gradient",
-                    "gradient": "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                    "gradient": "linear-gradient(135deg, #1877F2 0%, #f97316 100%)",
                     "name": "Primary Gradient"
                 },
                 {
                     "slug": "hero-gradient",
-                    "gradient": "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
+                    "gradient": "linear-gradient(135deg, #1877F2 0%, #f97316 100%)",
                     "name": "Hero Gradient"
+                },
+                {
+                    "slug": "dark-gradient",
+                    "gradient": "linear-gradient(135deg, #0f172a 0%, #020617 100%)",
+                    "name": "Dark Gradient"
                 }
             ]
         },
@@ -109,12 +124,12 @@
             ],
             "fontFamilies": [
                 {
-                    "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif",
+                    "fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif",
                     "slug": "system",
-                    "name": "System Font"
+                    "name": "Inter"
                 },
                 {
-                    "fontFamily": "'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace",
+                    "fontFamily": "'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace",
                     "slug": "mono",
                     "name": "Monospace"
                 }
@@ -206,11 +221,11 @@
     },
     "styles": {
         "color": {
-            "background": "var(--wp--preset--color--white)",
-            "text": "var(--wp--preset--color--dark)"
+            "background": "var(--wp--preset--color--dark)",
+            "text": "var(--wp--preset--color--text-primary)"
         },
         "typography": {
-            "fontFamily": "var(--wp--preset--font-family--system)",
+            "fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
             "fontSize": "var(--wp--preset--font-size--medium)",
             "lineHeight": "1.6"
         },
@@ -223,6 +238,9 @@
                     "fontSize": "2.25rem",
                     "fontWeight": "700",
                     "lineHeight": "1.25"
+                },
+                "color": {
+                    "text": "var(--wp--preset--color--text-primary)"
                 }
             },
             "h2": {
@@ -230,6 +248,9 @@
                     "fontSize": "1.875rem",
                     "fontWeight": "700",
                     "lineHeight": "1.25"
+                },
+                "color": {
+                    "text": "var(--wp--preset--color--text-primary)"
                 }
             },
             "h3": {
@@ -237,6 +258,9 @@
                     "fontSize": "1.5rem",
                     "fontWeight": "600",
                     "lineHeight": "1.25"
+                },
+                "color": {
+                    "text": "var(--wp--preset--color--text-primary)"
                 }
             },
             "h4": {
@@ -244,6 +268,9 @@
                     "fontSize": "1.25rem",
                     "fontWeight": "600",
                     "lineHeight": "1.25"
+                },
+                "color": {
+                    "text": "var(--wp--preset--color--text-primary)"
                 }
             },
             "link": {
@@ -252,7 +279,7 @@
                 },
                 ":hover": {
                     "color": {
-                        "text": "var(--wp--preset--color--primary-dark)"
+                        "text": "var(--wp--preset--color--primary-light)"
                     }
                 }
             },
@@ -262,7 +289,7 @@
                 },
                 "color": {
                     "background": "var(--wp--preset--color--primary)",
-                    "text": "var(--wp--preset--color--white)"
+                    "text": "#ffffff"
                 },
                 "typography": {
                     "fontWeight": "500"
@@ -284,7 +311,7 @@
                     }
                 },
                 "color": {
-                    "background": "var(--wp--preset--color--light)"
+                    "background": "var(--wp--preset--color--card)"
                 },
                 "spacing": {
                     "padding": {
@@ -300,7 +327,8 @@
                     "fontFamily": "var(--wp--preset--font-family--mono)"
                 },
                 "color": {
-                    "background": "var(--wp--preset--color--light)"
+                    "background": "var(--wp--preset--color--card)",
+                    "text": "var(--wp--preset--color--text-primary)"
                 },
                 "spacing": {
                     "padding": {
@@ -316,7 +344,7 @@
             },
             "core/separator": {
                 "border": {
-                    "color": "var(--wp--preset--color--light)"
+                    "color": "var(--wp--preset--color--card)"
                 }
             }
         }
