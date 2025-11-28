@@ -358,6 +358,40 @@ function writgocms_excerpt_more( $more ) {
 }
 add_filter( 'excerpt_more', 'writgocms_excerpt_more' );
 
+/**
+ * Fallback menu if no menu is assigned.
+ */
+function writgocms_fallback_menu() {
+    ?>
+    <ul id="primary-menu" class="primary-menu">
+        <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'writgocms' ); ?></a></li>
+        <?php
+        $blog_page_id = get_option( 'page_for_posts' );
+        if ( $blog_page_id ) :
+            ?>
+            <li><a href="<?php echo esc_url( get_permalink( $blog_page_id ) ); ?>"><?php esc_html_e( 'Blog', 'writgocms' ); ?></a></li>
+        <?php endif; ?>
+    </ul>
+    <?php
+}
+
+/**
+ * Get the blog page URL with fallback.
+ *
+ * @return string The blog page URL.
+ */
+function writgocms_get_blog_url() {
+    $blog_page_id = get_option( 'page_for_posts' );
+    if ( $blog_page_id ) {
+        $url = get_permalink( $blog_page_id );
+        if ( $url ) {
+            return $url;
+        }
+    }
+    // Fallback to home URL with blog path
+    return home_url( '/' );
+}
+
 // AIML Integration
 require_once WRITGOCMS_DIR . '/inc/class-aiml-provider.php';
 require_once WRITGOCMS_DIR . '/inc/admin-aiml-settings.php';

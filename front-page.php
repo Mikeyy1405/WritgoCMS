@@ -36,7 +36,7 @@ get_header();
                     ?>
                 </p>
                 <div class="hero-buttons">
-                    <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="btn btn-white">
+                    <a href="<?php echo esc_url( writgocms_get_blog_url() ); ?>" class="btn btn-white">
                         <?php esc_html_e( 'Read Blog', 'writgocms' ); ?>
                     </a>
                     <a href="#features" class="btn btn-outline-white">
@@ -168,7 +168,7 @@ get_header();
                     ?>
                 </div>
                 <div class="text-center mt-2">
-                    <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="btn btn-primary">
+                    <a href="<?php echo esc_url( writgocms_get_blog_url() ); ?>" class="btn btn-primary">
                         <?php esc_html_e( 'View All Posts', 'writgocms' ); ?>
                     </a>
                 </div>

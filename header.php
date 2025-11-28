@@ -75,18 +75,3 @@ if ( ! defined( 'ABSPATH' ) ) {
             </nav><!-- #site-navigation -->
         </div><!-- .container -->
     </header><!-- #masthead -->
-
-<?php
-/**
- * Fallback menu if no menu is assigned
- */
-function writgocms_fallback_menu() {
-    ?>
-    <ul id="primary-menu" class="primary-menu">
-        <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'writgocms' ); ?></a></li>
-        <?php if ( get_option( 'page_for_posts' ) ) : ?>
-            <li><a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>"><?php esc_html_e( 'Blog', 'writgocms' ); ?></a></li>
-        <?php endif; ?>
-    </ul>
-    <?php
-}
