@@ -102,34 +102,39 @@ function writgocms_setup() {
     // Add support for wide alignment
     add_theme_support( 'align-wide' );
 
-    // Add support for editor color palette
+    // Add support for editor color palette - Blue/Orange Dark Theme
     add_theme_support(
         'editor-color-palette',
         array(
             array(
-                'name'  => esc_html__( 'Primary', 'writgocms' ),
+                'name'  => esc_html__( 'Primary Blue', 'writgocms' ),
                 'slug'  => 'primary',
-                'color' => '#6366f1',
+                'color' => '#1877F2',
             ),
             array(
-                'name'  => esc_html__( 'Secondary', 'writgocms' ),
+                'name'  => esc_html__( 'Secondary Orange', 'writgocms' ),
                 'slug'  => 'secondary',
-                'color' => '#8b5cf6',
+                'color' => '#f97316',
             ),
             array(
-                'name'  => esc_html__( 'Accent', 'writgocms' ),
+                'name'  => esc_html__( 'Accent Orange', 'writgocms' ),
                 'slug'  => 'accent',
-                'color' => '#06b6d4',
+                'color' => '#fb923c',
             ),
             array(
-                'name'  => esc_html__( 'Dark', 'writgocms' ),
+                'name'  => esc_html__( 'Dark Background', 'writgocms' ),
                 'slug'  => 'dark',
-                'color' => '#1f2937',
+                'color' => '#0f172a',
             ),
             array(
-                'name'  => esc_html__( 'Light', 'writgocms' ),
-                'slug'  => 'light',
-                'color' => '#f9fafb',
+                'name'  => esc_html__( 'Card Background', 'writgocms' ),
+                'slug'  => 'card',
+                'color' => '#1e293b',
+            ),
+            array(
+                'name'  => esc_html__( 'Text Primary', 'writgocms' ),
+                'slug'  => 'text-primary',
+                'color' => '#f1f5f9',
             ),
         )
     );
@@ -219,8 +224,16 @@ add_action( 'widgets_init', 'writgocms_widgets_init' );
  * Enqueue scripts and styles.
  */
 function writgocms_scripts() {
+    // Google Fonts - Inter
+    wp_enqueue_style(
+        'writgocms-fonts',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+
     // Main stylesheet
-    wp_enqueue_style( 'writgocms-style', get_stylesheet_uri(), array(), WRITGOCMS_VERSION );
+    wp_enqueue_style( 'writgocms-style', get_stylesheet_uri(), array( 'writgocms-fonts' ), WRITGOCMS_VERSION );
 
     // Theme JavaScript
     wp_enqueue_script(
@@ -239,7 +252,7 @@ function writgocms_scripts() {
 add_action( 'wp_enqueue_scripts', 'writgocms_scripts' );
 
 /**
- * Add preconnect for Google Fonts (if used).
+ * Add preconnect for Google Fonts.
  *
  * @param array  $urls           URLs to print for resource hints.
  * @param string $relation_type  The relation type the URLs are printed.
@@ -247,6 +260,9 @@ add_action( 'wp_enqueue_scripts', 'writgocms_scripts' );
  */
 function writgocms_resource_hints( $urls, $relation_type ) {
     if ( 'preconnect' === $relation_type ) {
+        $urls[] = array(
+            'href' => 'https://fonts.googleapis.com',
+        );
         $urls[] = array(
             'href' => 'https://fonts.gstatic.com',
             'crossorigin',

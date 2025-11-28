@@ -25,7 +25,7 @@ get_header();
         <?php endif; ?>
 
         <?php if ( have_posts() ) : ?>
-            <div class="blog-posts">
+            <div class="blog-posts grid-view">
                 <?php
                 while ( have_posts() ) :
                     the_post();

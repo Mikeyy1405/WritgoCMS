@@ -72,19 +72,29 @@ Go to Appearance → Widgets to configure:
 
 ## 🎨 Customization
 
-### CSS Variables
-The theme uses CSS custom properties for easy customization. Edit `style.css` to modify:
+### Dark Professional Theme
+The theme features a modern dark design with the following color scheme:
 
 ```css
 :root {
-    /* Colors */
-    --color-primary: #6366f1;
-    --color-primary-dark: #4f46e5;
-    --color-secondary: #8b5cf6;
-    --color-accent: #06b6d4;
+    /* Primary Blue & Orange Colors */
+    --color-primary: #1877F2;
+    --color-primary-dark: #1565c0;
+    --color-secondary: #f97316;
+    --color-accent: #fb923c;
+    
+    /* Dark Background Colors */
+    --color-bg: #0f172a;
+    --color-bg-alt: #1e293b;
+    --color-bg-dark: #020617;
+    
+    /* Light Text Colors */
+    --color-text: #f1f5f9;
+    --color-text-light: #94a3b8;
+    --color-heading: #f8fafc;
     
     /* Typography */
-    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-size-base: 1rem;
     
     /* Spacing */
