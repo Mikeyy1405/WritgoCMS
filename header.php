@@ -22,48 +22,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php wp_body_open(); ?>
 
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#primary">
-        <?php esc_html_e( 'Skip to content', 'writgocms' ); ?>
-    </a>
+    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'writgocms' ); ?></a>
 
     <header id="masthead" class="site-header">
-        <div class="site-header-inner">
-            <div class="site-branding">
-                <?php
-                if ( has_custom_logo() ) :
-                    the_custom_logo();
-                else :
-                    ?>
-                    <h1 class="site-title">
-                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-                            <?php bloginfo( 'name' ); ?>
-                        </a>
-                    </h1>
-                    <?php
-                    $description = get_bloginfo( 'description', 'display' );
-                    if ( $description || is_customize_preview() ) :
-                        ?>
-                        <p class="site-description"><?php echo esc_html( $description ); ?></p>
-                    <?php endif; ?>
-                <?php endif; ?>
-            </div><!-- .site-branding -->
-
-            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                <span class="menu-toggle-icon"></span>
-                <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'writgocms' ); ?></span>
-            </button>
-
-            <nav id="site-navigation" class="main-navigation">
-                <?php
-                wp_nav_menu(
-                    array(
-                        'theme_location' => 'primary',
-                        'menu_id'        => 'primary-menu',
-                        'container'      => false,
-                        'fallback_cb'    => false,
-                    )
-                );
+        <div class="site-branding">
+            <?php
+            if ( has_custom_logo() ) :
+                the_custom_logo();
+            else :
                 ?>
-            </nav><!-- #site-navigation -->
-        </div><!-- .site-header-inner -->
+                <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+                <?php
+                $description = get_bloginfo( 'description', 'display' );
+                if ( $description || is_customize_preview() ) :
+                    ?>
+                    <p class="site-description"><?php echo esc_html( $description ); ?></p>
+                    <?php
+                endif;
+            endif;
+            ?>
+        </div><!-- .site-branding -->
+
+        <nav id="site-navigation" class="main-navigation">
+            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'writgocms' ); ?></button>
+            <?php
+            wp_nav_menu(
+                array(
+                    'theme_location' => 'primary',
+                    'menu_id'        => 'primary-menu',
+                    'fallback_cb'    => false,
+                )
+            );
+            ?>
+        </nav><!-- #site-navigation -->
     </header><!-- #masthead -->
