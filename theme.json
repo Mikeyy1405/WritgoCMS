@@ -392,12 +392,5 @@
             "title": "Page Without Title",
             "postTypes": ["page"]
         }
-    ],
-    "patterns": [
-        "writgocms-hero",
-        "writgocms-features",
-        "writgocms-blog",
-        "writgocms-cta",
-        "writgocms-content"
     ]
 }
