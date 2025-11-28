@@ -868,7 +868,9 @@ class WritgoCMS_AIML_Provider {
         $attachment_id = media_handle_sideload( $file_array, 0, sanitize_text_field( substr( $prompt, 0, 100 ) ) );
 
         if ( is_wp_error( $attachment_id ) ) {
-            @unlink( $tmp );
+            if ( file_exists( $tmp ) ) {
+                unlink( $tmp );
+            }
             return $attachment_id;
         }
 

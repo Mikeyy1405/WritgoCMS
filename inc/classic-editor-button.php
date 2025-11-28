@@ -90,7 +90,8 @@ class WritgoCMS_Classic_Editor_Button {
         }
 
         // Only load for classic editor
-        if ( function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( get_post() ) ) {
+        $post = get_post();
+        if ( null !== $post && function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( $post ) ) {
             return;
         }
 
