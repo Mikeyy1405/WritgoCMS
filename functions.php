@@ -102,39 +102,34 @@ function writgocms_setup() {
     // Add support for wide alignment
     add_theme_support( 'align-wide' );
 
-    // Add support for editor color palette - Blue/Orange Dark Theme
+    // Add support for editor color palette
     add_theme_support(
         'editor-color-palette',
         array(
             array(
-                'name'  => esc_html__( 'Primary Blue', 'writgocms' ),
+                'name'  => esc_html__( 'Primary', 'writgocms' ),
                 'slug'  => 'primary',
-                'color' => '#1877F2',
+                'color' => '#6366f1',
             ),
             array(
-                'name'  => esc_html__( 'Secondary Orange', 'writgocms' ),
+                'name'  => esc_html__( 'Secondary', 'writgocms' ),
                 'slug'  => 'secondary',
-                'color' => '#f97316',
+                'color' => '#8b5cf6',
             ),
             array(
-                'name'  => esc_html__( 'Accent Orange', 'writgocms' ),
+                'name'  => esc_html__( 'Accent', 'writgocms' ),
                 'slug'  => 'accent',
-                'color' => '#fb923c',
+                'color' => '#06b6d4',
             ),
             array(
-                'name'  => esc_html__( 'Dark Background', 'writgocms' ),
+                'name'  => esc_html__( 'Dark', 'writgocms' ),
                 'slug'  => 'dark',
-                'color' => '#0f172a',
+                'color' => '#1f2937',
             ),
             array(
-                'name'  => esc_html__( 'Card Background', 'writgocms' ),
-                'slug'  => 'card',
-                'color' => '#1e293b',
-            ),
-            array(
-                'name'  => esc_html__( 'Text Primary', 'writgocms' ),
-                'slug'  => 'text-primary',
-                'color' => '#f1f5f9',
+                'name'  => esc_html__( 'Light', 'writgocms' ),
+                'slug'  => 'light',
+                'color' => '#f9fafb',
             ),
         )
     );
@@ -224,16 +219,8 @@ add_action( 'widgets_init', 'writgocms_widgets_init' );
  * Enqueue scripts and styles.
  */
 function writgocms_scripts() {
-    // Google Fonts - Inter
-    wp_enqueue_style(
-        'writgocms-fonts',
-        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
-        array(),
-        null
-    );
-
     // Main stylesheet
-    wp_enqueue_style( 'writgocms-style', get_stylesheet_uri(), array( 'writgocms-fonts' ), WRITGOCMS_VERSION );
+    wp_enqueue_style( 'writgocms-style', get_stylesheet_uri(), array(), WRITGOCMS_VERSION );
 
     // Theme JavaScript
     wp_enqueue_script(
@@ -252,7 +239,7 @@ function writgocms_scripts() {
 add_action( 'wp_enqueue_scripts', 'writgocms_scripts' );
 
 /**
- * Add preconnect for Google Fonts.
+ * Add preconnect for Google Fonts (if used).
  *
  * @param array  $urls           URLs to print for resource hints.
  * @param string $relation_type  The relation type the URLs are printed.
@@ -260,9 +247,6 @@ add_action( 'wp_enqueue_scripts', 'writgocms_scripts' );
  */
 function writgocms_resource_hints( $urls, $relation_type ) {
     if ( 'preconnect' === $relation_type ) {
-        $urls[] = array(
-            'href' => 'https://fonts.googleapis.com',
-        );
         $urls[] = array(
             'href' => 'https://fonts.gstatic.com',
             'crossorigin',
@@ -407,52 +391,6 @@ function writgocms_get_blog_url() {
     // Fallback to home URL with blog path
     return home_url( '/' );
 }
-
-/**
- * Register block pattern categories for WritgoCMS.
- */
-function writgocms_register_block_pattern_categories() {
-	register_block_pattern_category(
-		'writgocms-hero',
-		array(
-			'label'       => esc_html__( 'Hero Sections', 'writgocms' ),
-			'description' => esc_html__( 'Hero sections for page headers and landing pages.', 'writgocms' ),
-		)
-	);
-
-	register_block_pattern_category(
-		'writgocms-features',
-		array(
-			'label'       => esc_html__( 'Features', 'writgocms' ),
-			'description' => esc_html__( 'Feature grids and service sections.', 'writgocms' ),
-		)
-	);
-
-	register_block_pattern_category(
-		'writgocms-blog',
-		array(
-			'label'       => esc_html__( 'Blog Layouts', 'writgocms' ),
-			'description' => esc_html__( 'Blog post grids and layouts.', 'writgocms' ),
-		)
-	);
-
-	register_block_pattern_category(
-		'writgocms-cta',
-		array(
-			'label'       => esc_html__( 'Call to Action', 'writgocms' ),
-			'description' => esc_html__( 'Call to action sections.', 'writgocms' ),
-		)
-	);
-
-	register_block_pattern_category(
-		'writgocms-content',
-		array(
-			'label'       => esc_html__( 'Content Sections', 'writgocms' ),
-			'description' => esc_html__( 'Team grids, testimonials, stats, and more.', 'writgocms' ),
-		)
-	);
-}
-add_action( 'init', 'writgocms_register_block_pattern_categories' );
 
 // AIML Integration
 require_once WRITGOCMS_DIR . '/inc/class-aiml-provider.php';
