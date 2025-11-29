@@ -78,10 +78,10 @@ The theme uses CSS custom properties for easy customization. Edit `style.css` to
 ```css
 :root {
     /* Colors */
-    --color-primary: #6366f1;
-    --color-primary-dark: #4f46e5;
-    --color-secondary: #8b5cf6;
-    --color-accent: #06b6d4;
+    --color-primary: #1877F2;
+    --color-primary-dark: #1565c0;
+    --color-secondary: #f97316;
+    --color-accent: #fb923c;
     
     /* Typography */
     --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

@@ -76,18 +76,181 @@ body {
 }
 
 /* Responsive design */
-@media (max-width: 480px) {
-  /* Mobile styles */
+
+/* ==========================================================================
+   Mobile Optimizations - Better spacing and layout
+   ========================================================================== */
+
+/* Mobile: 320px - 767px */
+@media (max-width: 767px) {
+    /* Reduce hero section height on mobile */
+    .hero-section {
+        min-height: auto;
+        padding: clamp(100px, 15vh, 120px) 0 clamp(60px, 10vh, 80px);
+    }
+    
+    /* Reduce section padding on mobile */
+    .section {
+        padding: clamp(40px, 8vh, 60px) 0;
+    }
+    
+    /* Better hero content spacing */
+    .hero-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        margin-bottom: var(--spacing-md, 1rem);
+    }
+    
+    .hero-description {
+        font-size: var(--font-size-base, 1rem);
+        margin-bottom: var(--spacing-xl, 2rem);
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: var(--spacing-xl, 2rem);
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .hero-stats {
+        gap: var(--spacing-lg, 1.5rem);
+        margin-top: var(--spacing-xl, 2rem);
+    }
+    
+    /* Feature cards - single column on mobile */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg, 1.5rem);
+    }
+    
+    .feature-card {
+        padding: var(--spacing-lg, 1.5rem);
+    }
+    
+    /* Services section mobile layout */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl, 2rem);
+    }
+    
+    .services-image-wrapper {
+        min-height: 300px;
+    }
+    
+    /* Stats grid mobile */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg, 1.5rem);
+    }
+    
+    /* Testimonials mobile */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg, 1.5rem);
+    }
+    
+    /* Blog posts mobile */
+    .blog-posts.grid-view {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg, 1.5rem);
+    }
+    
+    /* Blog grid mobile */
+    .blog-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg, 1.5rem);
+    }
+    
+    /* Smaller fonts for mobile */
+    h1 { font-size: var(--font-size-3xl, 1.875rem); }
+    h2 { font-size: var(--font-size-2xl, 1.5rem); }
+    h3 { font-size: var(--font-size-xl, 1.25rem); }
+    
+    /* Container padding adjustment */
+    .container {
+        padding-left: var(--spacing-md, 1rem);
+        padding-right: var(--spacing-md, 1rem);
+    }
+    
+    /* Logo size on mobile */
+    .custom-logo {
+        max-height: 35px;
+    }
+    
+    .site-header.is-scrolled .custom-logo {
+        max-height: 30px;
+    }
+
+    /* Hero section optimized for mobile */
+    .hero {
+        padding: 40px 16px;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    /* Card adjustments for mobile */
+    .card {
+        margin: 12px;
+    }
+
+    /* Ensure touch elements remain accessible */
+    button,
+    .btn,
+    a.btn,
+    input[type="submit"],
+    input[type="button"] {
+        min-height: 48px;
+        padding: 12px 20px;
+    }
 }
 
-@media (max-width: 768px) {
-  /* Tablet styles */
+/* Tablet: 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .blog-posts.grid-view {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+/* Small desktop styles */
 @media (max-width: 1024px) {
-  /* Small desktop styles */
+    /* Adjust container max-width */
+    .container {
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
+/* Larger desktop styles */
 @media (max-width: 1200px) {
-  /* Larger desktop styles */
+    /* Adjust container max-width for larger screens */
+    .container {
+        max-width: 1140px;
+    }
 }
