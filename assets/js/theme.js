@@ -252,7 +252,7 @@
                     right: 2rem;
                     width: 48px;
                     height: 48px;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
                     color: #fff;
                     border: none;
                     border-radius: 12px;
@@ -264,11 +264,11 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+                    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.35);
                 }
                 .back-to-top:hover {
                     transform: translateY(-4px);
-                    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+                    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.45);
                 }
                 .back-to-top.is-visible {
                     opacity: 1;
@@ -518,7 +518,7 @@
                 outline: none;
             }
             body.user-is-tabbing *:focus {
-                outline: 2px solid var(--color-primary, #667eea);
+                outline: 2px solid var(--color-primary, #1877F2);
                 outline-offset: 2px;
             }
         `;

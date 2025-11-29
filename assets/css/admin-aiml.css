@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
     color: #fff;
     padding: 20px 25px;
     margin: -10px -20px 20px -20px;
@@ -38,15 +38,15 @@
 
 .nav-tab:hover {
     background: #f3f4f6;
-    color: #6366f1;
+    color: #1877F2;
 }
 
 .nav-tab-active,
 .nav-tab-active:focus,
 .nav-tab-active:hover {
     background: #fff;
-    border-bottom: 2px solid #6366f1;
-    color: #6366f1;
+    border-bottom: 2px solid #1877F2;
+    color: #1877F2;
 }
 
 /* Tab Content */
@@ -79,13 +79,13 @@
 .provider-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    border-color: #6366f1;
+    border-color: #1877F2;
 }
 
 .provider-card.active {
-    background: linear-gradient(145deg, #eef2ff 0%, #e0e7ff 100%);
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    background: linear-gradient(145deg, #e0f2fe 0%, #bae6fd 100%);
+    border-color: #1877F2;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2);
 }
 
 .provider-card input[type="radio"] {
@@ -111,7 +111,7 @@
 }
 
 .provider-card.active .provider-name {
-    color: #6366f1;
+    color: #1877F2;
 }
 
 /* Provider Settings */
@@ -199,7 +199,7 @@
     background: #f3f4f6;
     border-radius: 4px;
     font-weight: 600;
-    color: #6366f1;
+    color: #1877F2;
 }
 
 /* Test Interface */
@@ -221,7 +221,7 @@
 }
 
 .test-type-btn.active {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
     color: #fff !important;
     border: none !important;
 }
@@ -255,7 +255,7 @@
 }
 
 .test-input-group textarea:focus {
-    border-color: #6366f1;
+    border-color: #1877F2;
     outline: none;
 }
 
@@ -266,7 +266,7 @@
 }
 
 #test-generate {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
     border: none !important;
     padding: 12px 30px !important;
     font-size: 15px !important;
@@ -362,7 +362,7 @@
 .stat-number {
     font-size: 28px;
     font-weight: 700;
-    color: #6366f1;
+    color: #1877F2;
 }
 
 .stat-label {
@@ -439,7 +439,7 @@
     }
 
     .provider-card.active {
-        background: linear-gradient(145deg, #312e81 0%, #1e1b4b 100%);
+        background: linear-gradient(145deg, #1e3a5f 0%, #0c2340 100%);
     }
 
     .provider-name,
@@ -532,7 +532,7 @@
 
 /* Submit Button */
 .submit .button-primary {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
     border: none !important;
     padding: 10px 30px !important;
     font-size: 14px !important;

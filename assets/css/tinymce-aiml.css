@@ -28,13 +28,13 @@
 }
 
 .aiml-mode-btn:hover {
-    border-color: #6366f1;
-    color: #6366f1;
+    border-color: #1877F2;
+    color: #1877F2;
 }
 
 .aiml-mode-btn.active {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    border-color: #6366f1;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    border-color: #1877F2;
     color: #fff;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .aiml-prompt-group textarea:focus {
-    border-color: #6366f1;
+    border-color: #1877F2;
     outline: none;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .aiml-generate-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
     border: none;
     color: #fff;
     padding: 12px 30px;
@@ -85,7 +85,7 @@
 
 .aiml-generate-btn:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
 }
 
 .aiml-generate-btn:disabled {
@@ -127,7 +127,7 @@
 
 /* Ensure TinyMCE button styling */
 .mce-btn button[data-mce-btn="writgocms_aiml"] {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
     color: #fff !important;
     border-radius: 4px !important;
 }

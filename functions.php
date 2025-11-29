@@ -109,17 +109,17 @@ function writgocms_setup() {
             array(
                 'name'  => esc_html__( 'Primary', 'writgocms' ),
                 'slug'  => 'primary',
-                'color' => '#6366f1',
+                'color' => '#1877F2',
             ),
             array(
                 'name'  => esc_html__( 'Secondary', 'writgocms' ),
                 'slug'  => 'secondary',
-                'color' => '#8b5cf6',
+                'color' => '#f97316',
             ),
             array(
                 'name'  => esc_html__( 'Accent', 'writgocms' ),
                 'slug'  => 'accent',
-                'color' => '#06b6d4',
+                'color' => '#fb923c',
             ),
             array(
                 'name'  => esc_html__( 'Dark', 'writgocms' ),

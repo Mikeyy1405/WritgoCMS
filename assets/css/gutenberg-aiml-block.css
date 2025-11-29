@@ -51,9 +51,9 @@
 }
 
 .aiml-block-mode-toggle .components-button.is-primary {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
     border: none;
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
 }
 
 .aiml-block-mode-toggle .components-button.is-secondary {
@@ -64,8 +64,8 @@
 
 .aiml-block-mode-toggle .components-button.is-secondary:hover {
     background: #f8fafc;
-    color: #6366f1;
-    border-color: #6366f1;
+    color: #1877F2;
+    border-color: #1877F2;
 }
 
 /* Prompt Input */
@@ -80,9 +80,9 @@
 }
 
 .aiml-block-prompt textarea:focus {
-    border-color: #6366f1;
+    border-color: #1877F2;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
 }
 
 .aiml-block-prompt .components-base-control__label {
@@ -97,19 +97,19 @@
 }
 
 .aiml-generate-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
     border: none !important;
     padding: 10px 24px !important;
     font-size: 14px !important;
     font-weight: 500 !important;
     border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
     transition: all 0.2s ease;
 }
 
 .aiml-generate-btn:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 6px 16px rgba(24, 119, 242, 0.4);
 }
 
 .aiml-generate-btn:disabled {
@@ -212,7 +212,7 @@
 .writgocms-ai-content {
     padding: 20px;
     background: #f8fafc;
-    border-left: 4px solid #6366f1;
+    border-left: 4px solid #1877F2;
     border-radius: 0 8px 8px 0;
     margin: 20px 0;
 }
@@ -245,7 +245,7 @@
     }
 
     .aiml-block-prompt textarea:focus {
-        border-color: #6366f1;
+        border-color: #1877F2;
     }
 
     .aiml-block-prompt .components-base-control__label {
