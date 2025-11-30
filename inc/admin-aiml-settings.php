@@ -269,9 +269,9 @@ class WritgoCMS_AIML_Admin_Settings {
                         <td>
                             <select id="writgocms_image_size" name="writgocms_image_size">
                                 <option value="1024x1024" <?php selected( get_option( 'writgocms_image_size', '1024x1024' ), '1024x1024' ); ?>>1024x1024</option>
-                                <option value="1792x1024" <?php selected( get_option( 'writgocms_image_size' ), '1792x1024' ); ?>>1792x1024</option>
-                                <option value="1024x1792" <?php selected( get_option( 'writgocms_image_size' ), '1024x1792' ); ?>>1024x1792</option>
-                                <option value="512x512" <?php selected( get_option( 'writgocms_image_size' ), '512x512' ); ?>>512x512</option>
+                                <option value="1792x1024" <?php selected( get_option( 'writgocms_image_size', '1024x1024' ), '1792x1024' ); ?>>1792x1024</option>
+                                <option value="1024x1792" <?php selected( get_option( 'writgocms_image_size', '1024x1024' ), '1024x1792' ); ?>>1024x1792</option>
+                                <option value="512x512" <?php selected( get_option( 'writgocms_image_size', '1024x1024' ), '512x512' ); ?>>512x512</option>
                             </select>
                         </td>
                     </tr>
@@ -282,7 +282,7 @@ class WritgoCMS_AIML_Admin_Settings {
                         <td>
                             <select id="writgocms_image_quality" name="writgocms_image_quality">
                                 <option value="standard" <?php selected( get_option( 'writgocms_image_quality', 'standard' ), 'standard' ); ?>><?php esc_html_e( 'Standard', 'writgocms' ); ?></option>
-                                <option value="hd" <?php selected( get_option( 'writgocms_image_quality' ), 'hd' ); ?>><?php esc_html_e( 'HD', 'writgocms' ); ?></option>
+                                <option value="hd" <?php selected( get_option( 'writgocms_image_quality', 'standard' ), 'hd' ); ?>><?php esc_html_e( 'HD', 'writgocms' ); ?></option>
                             </select>
                         </td>
                     </tr>
