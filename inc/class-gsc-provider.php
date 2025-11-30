@@ -209,6 +209,12 @@ class WritgoCMS_GSC_Provider {
 			return;
 		}
 
+		// Verify user has permission to manage options.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// OAuth state parameter serves as CSRF protection.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$state = isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : '';
 		$saved_state = get_option( 'writgocms_gsc_oauth_state', '' );
