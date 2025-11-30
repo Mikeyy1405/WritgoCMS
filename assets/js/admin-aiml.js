@@ -585,7 +585,7 @@
                         }
                     },
                     error: function() {
-                        self.showNotification('Connection error', 'error');
+                        self.showNotification('Verbindingsfout', 'error');
                     },
                     complete: function() {
                         $button.prop('disabled', false).html('📋 ' + writgocmsAiml.i18n.generateDetailedPlan);
@@ -619,7 +619,7 @@
                         }
                     },
                     error: function() {
-                        self.showNotification('Connection error', 'error');
+                        self.showNotification('Verbindingsfout', 'error');
                     }
                 });
             });
@@ -661,7 +661,7 @@
                         var keys = Object.keys(plans);
 
                         if (keys.length === 0) {
-                            $container.html('<p class="no-plans">No saved content plans yet. Generate a topical map to get started!</p>');
+                            $container.html('<p class="no-plans">Nog geen opgeslagen contentplannen. Genereer een topical map om te beginnen!</p>');
                             return;
                         }
 
@@ -674,8 +674,8 @@
                             html += '<span class="plan-date">' + self.escapeHtml(plan.created_at) + '</span>';
                             html += '</div>';
                             html += '<div class="plan-actions">';
-                            html += '<button type="button" class="button button-small load-plan-btn" data-plan="' + self.escapeJsonAttr(plan.data) + '">📂 Load</button>';
-                            html += '<button type="button" class="button button-small delete-plan-btn" data-plan-id="' + self.escapeHtml(planId) + '">🗑️ Delete</button>';
+                            html += '<button type="button" class="button button-small load-plan-btn" data-plan="' + self.escapeJsonAttr(plan.data) + '">📂 Laden</button>';
+                            html += '<button type="button" class="button button-small delete-plan-btn" data-plan-id="' + self.escapeHtml(planId) + '">🗑️ Verwijderen</button>';
                             html += '</div>';
                             html += '</li>';
                         });
@@ -703,7 +703,7 @@
 
             // Main topic header
             html += '<div class="main-topic-header">';
-            html += '<h4>🎯 ' + self.escapeHtml(data.main_topic || 'Content Strategy') + '</h4>';
+            html += '<h4>🎯 ' + self.escapeHtml(data.main_topic || 'Contentstrategie') + '</h4>';
             html += '</div>';
 
             // Pillar content
@@ -741,7 +741,7 @@
 
                         pillar.cluster_articles.forEach(function(article) {
                             var priorityClass = 'priority-' + (article.priority || 'medium');
-                            var priorityLabel = writgocmsAiml.i18n[article.priority] || article.priority || 'Medium';
+                            var priorityLabel = writgocmsAiml.i18n[article.priority] || article.priority || 'Gemiddeld';
 
                             html += '<li class="cluster-article ' + priorityClass + '">';
                             html += '<div class="article-info">';
@@ -817,19 +817,19 @@
 
             // Title and meta
             html += '<div class="plan-header">';
-            html += '<h4>' + self.escapeHtml(data.title || 'Article Outline') + '</h4>';
+            html += '<h4>' + self.escapeHtml(data.title || 'Artikel Outline') + '</h4>';
             if (data.meta_description) {
-                html += '<p class="meta-description"><strong>Meta Description:</strong> ' + self.escapeHtml(data.meta_description) + '</p>';
+                html += '<p class="meta-description"><strong>Meta Beschrijving:</strong> ' + self.escapeHtml(data.meta_description) + '</p>';
             }
             if (data.estimated_word_count) {
-                html += '<p class="word-count"><strong>Estimated Word Count:</strong> ' + data.estimated_word_count + '</p>';
+                html += '<p class="word-count"><strong>Geschat Aantal Woorden:</strong> ' + data.estimated_word_count + '</p>';
             }
             html += '</div>';
 
             // Target keywords
             if (data.target_keywords && data.target_keywords.length > 0) {
                 html += '<div class="target-keywords">';
-                html += '<strong>Target Keywords:</strong> ';
+                html += '<strong>Doelzoekwoorden:</strong> ';
                 data.target_keywords.forEach(function(keyword) {
                     html += '<span class="keyword-tag">' + self.escapeHtml(keyword) + '</span>';
                 });
@@ -839,11 +839,11 @@
             // Content structure
             if (data.content_structure) {
                 html += '<div class="content-structure">';
-                html += '<h5>📝 Content Structure</h5>';
+                html += '<h5>📝 Contentstructuur</h5>';
 
                 if (data.content_structure.introduction) {
                     html += '<div class="structure-section intro">';
-                    html += '<strong>Introduction:</strong> ' + self.escapeHtml(data.content_structure.introduction);
+                    html += '<strong>Introductie:</strong> ' + self.escapeHtml(data.content_structure.introduction);
                     html += '</div>';
                 }
 
@@ -882,7 +882,7 @@
 
                 if (data.content_structure.conclusion) {
                     html += '<div class="structure-section conclusion">';
-                    html += '<strong>Conclusion:</strong> ' + self.escapeHtml(data.content_structure.conclusion);
+                    html += '<strong>Conclusie:</strong> ' + self.escapeHtml(data.content_structure.conclusion);
                     html += '</div>';
                 }
 
@@ -892,7 +892,7 @@
             // Internal links
             if (data.internal_links && data.internal_links.length > 0) {
                 html += '<div class="internal-links">';
-                html += '<h5>🔗 Suggested Internal Links</h5>';
+                html += '<h5>🔗 Aanbevolen Interne Links</h5>';
                 html += '<ul>';
                 data.internal_links.forEach(function(link) {
                     html += '<li>' + self.escapeHtml(link) + '</li>';
@@ -904,7 +904,7 @@
             // CTA suggestions
             if (data.cta_suggestions && data.cta_suggestions.length > 0) {
                 html += '<div class="cta-suggestions">';
-                html += '<h5>🎯 CTA Suggestions</h5>';
+                html += '<h5>🎯 CTA Suggesties</h5>';
                 html += '<ul>';
                 data.cta_suggestions.forEach(function(cta) {
                     html += '<li>' + self.escapeHtml(cta) + '</li>';

@@ -211,12 +211,16 @@ class WritgoCMS_Content_Planner {
 		$target_audience  = get_option( 'writgocms_target_audience', '' );
 		$items_per_analysis = get_option( 'writgocms_items_per_analysis', 20 );
 
-		$existing_topics_text = ! empty( $existing_topics ) 
-			? 'Bestaande artikelen op deze website: ' . implode( ', ', array_slice( $existing_topics, 0, 10 ) )
+		// Escape existing topics to prevent prompt injection
+		$escaped_topics = array_map( 'esc_html', array_slice( $existing_topics, 0, 10 ) );
+		$existing_topics_text = ! empty( $escaped_topics ) 
+			? 'Bestaande artikelen op deze website: ' . implode( ', ', $escaped_topics )
 			: '';
 
-		$categories_text = ! empty( $top_categories )
-			? 'Huidige categorieën: ' . implode( ', ', array_column( $top_categories, 'name' ) )
+		// Escape category names
+		$escaped_categories = array_map( 'esc_html', array_column( $top_categories, 'name' ) );
+		$categories_text = ! empty( $escaped_categories )
+			? 'Huidige categorieën: ' . implode( ', ', $escaped_categories )
 			: '';
 
 		$prompt = sprintf(
@@ -866,7 +870,7 @@ Return ONLY valid JSON, no additional text.',
 			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
 		}
 
-		$status_text = 'draft' === $status ? 'als concept' : '';
+		$status_text = 'draft' === $status ? 'als concept' : 'direct';
 		wp_send_json_success(
 			array(
 				'message'  => 'Content succesvol gepubliceerd ' . $status_text . '!',
