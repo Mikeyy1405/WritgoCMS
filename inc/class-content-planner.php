@@ -314,7 +314,7 @@ Return ONLY valid JSON, no additional text.',
 
 		$saved_plans = get_option( 'writgocms_saved_content_plans', array() );
 
-		$plan_id                  = 'plan_' . time() . '_' . wp_rand( 1000, 9999 );
+		$plan_id                  = wp_generate_uuid4();
 		$saved_plans[ $plan_id ] = array(
 			'name'       => $plan_name,
 			'data'       => $decoded,

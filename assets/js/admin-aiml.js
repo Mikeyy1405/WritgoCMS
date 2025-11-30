@@ -426,11 +426,11 @@
                             html += '<li class="saved-plan-item">';
                             html += '<div class="plan-info">';
                             html += '<strong>' + self.escapeHtml(plan.name) + '</strong>';
-                            html += '<span class="plan-date">' + plan.created_at + '</span>';
+                            html += '<span class="plan-date">' + self.escapeHtml(plan.created_at) + '</span>';
                             html += '</div>';
                             html += '<div class="plan-actions">';
-                            html += '<button type="button" class="button button-small load-plan-btn" data-plan=\'' + JSON.stringify(plan.data).replace(/'/g, '&#39;') + '\'>📂 Load</button>';
-                            html += '<button type="button" class="button button-small delete-plan-btn" data-plan-id="' + planId + '">🗑️ Delete</button>';
+                            html += '<button type="button" class="button button-small load-plan-btn" data-plan="' + self.escapeJsonAttr(plan.data) + '">📂 Load</button>';
+                            html += '<button type="button" class="button button-small delete-plan-btn" data-plan-id="' + self.escapeHtml(planId) + '">🗑️ Delete</button>';
                             html += '</div>';
                             html += '</li>';
                         });
@@ -485,7 +485,7 @@
                     }
 
                     html += '</div>';
-                    html += '<button type="button" class="button button-small generate-detail-btn" data-topic="' + self.escapeHtml(pillar.title) + '" data-keywords=\'' + JSON.stringify(pillar.keywords || []).replace(/'/g, '&#39;') + '\'>📋 ' + writgocmsAiml.i18n.generateDetailedPlan + '</button>';
+                    html += self.createDetailButton(pillar.title, pillar.keywords);
                     html += '</div>';
 
                     // Cluster articles
@@ -513,7 +513,7 @@
                                 html += '</div>';
                             }
 
-                            html += '<button type="button" class="button button-small generate-detail-btn" data-topic="' + self.escapeHtml(article.title) + '" data-keywords=\'' + JSON.stringify(article.keywords || []).replace(/'/g, '&#39;') + '\'>📋 ' + writgocmsAiml.i18n.generateDetailedPlan + '</button>';
+                            html += self.createDetailButton(article.title, article.keywords);
                             html += '</li>';
                         });
 
@@ -684,10 +684,29 @@
         },
 
         /**
+         * Escape JSON for use in HTML attributes
+         * Uses proper HTML entity encoding for all special characters
+         */
+        escapeJsonAttr: function(obj) {
+            var json = JSON.stringify(obj);
+            return this.escapeHtml(json);
+        },
+
+        /**
+         * Create a generate detail button HTML
+         */
+        createDetailButton: function(topic, keywords) {
+            return '<button type="button" class="button button-small generate-detail-btn" ' +
+                'data-topic="' + this.escapeHtml(topic) + '" ' +
+                'data-keywords="' + this.escapeJsonAttr(keywords || []) + '">' +
+                '📋 ' + writgocmsAiml.i18n.generateDetailedPlan + '</button>';
+        },
+
+        /**
          * Show notification
          */
         showNotification: function(message, type) {
-            var $notification = $('<div class="aiml-notification ' + type + '">' + message + '</div>');
+            var $notification = $('<div class="aiml-notification ' + type + '">' + this.escapeHtml(message) + '</div>');
             $('body').append($notification);
 
             setTimeout(function() {
