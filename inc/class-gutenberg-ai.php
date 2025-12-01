@@ -133,11 +133,6 @@ class WritgoCMS_Gutenberg_AI {
 			),
 		);
 
-		// WordPress admin users always have access
-		if ( current_user_can( 'manage_options' ) ) {
-			$info['is_valid'] = true;
-		}
-
 		if ( class_exists( 'WritgoCMS_License_Manager' ) ) {
 			$license_manager = WritgoCMS_License_Manager::get_instance();
 			$status = $license_manager->get_license_status();
