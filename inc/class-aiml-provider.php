@@ -710,7 +710,9 @@ class WritgoCMS_AIML_Provider {
         // If API is unavailable, allow operation (fallback).
         if ( is_wp_error( $balance ) ) {
             // Log the error but don't block the operation.
-            error_log( 'WritgoAI Credit Check Failed: ' . $balance->get_error_message() );
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'WritgoAI Credit Check Failed: ' . $balance->get_error_message() );
+            }
             return true;
         }
 
@@ -755,7 +757,7 @@ class WritgoCMS_AIML_Provider {
         $result = $api_client->deduct_credits( $action_type );
 
         // Log any errors but don't block the operation.
-        if ( is_wp_error( $result ) ) {
+        if ( is_wp_error( $result ) && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
             error_log( 'WritgoAI Credit Deduction Failed: ' . $result->get_error_message() );
         }
     }

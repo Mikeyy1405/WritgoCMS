@@ -312,11 +312,11 @@ class WritgoCMS_API_Client {
 
 		// Map API error codes to Dutch messages.
 		$error_messages = array(
-			'INSUFFICIENT_CREDITS' => __( 'Onvoldoende credits. Upgrade je abonnement of wacht tot je maandelijkse limiet reset.', 'writgocms' ),
-			'INVALID_LICENSE'      => __( 'Ongeldige licentie sleutel. Controleer je licentie in de instellingen.', 'writgocms' ),
-			'RATE_LIMIT_EXCEEDED'  => __( 'Te veel verzoeken. Probeer het over enkele minuten opnieuw.', 'writgocms' ),
-			'SUBSCRIPTION_EXPIRED' => __( 'Je abonnement is verlopen. Verleng je abonnement om door te gaan.', 'writgocms' ),
-			'SUBSCRIPTION_CANCELED'=> __( 'Je abonnement is geannuleerd. Heractiveer je abonnement om door te gaan.', 'writgocms' ),
+			'INSUFFICIENT_CREDITS'  => __( 'Onvoldoende credits. Upgrade je abonnement of wacht tot je maandelijkse limiet reset.', 'writgocms' ),
+			'INVALID_LICENSE'       => __( 'Ongeldige licentie sleutel. Controleer je licentie in de instellingen.', 'writgocms' ),
+			'RATE_LIMIT_EXCEEDED'   => __( 'Te veel verzoeken. Probeer het over enkele minuten opnieuw.', 'writgocms' ),
+			'SUBSCRIPTION_EXPIRED'  => __( 'Je abonnement is verlopen. Verleng je abonnement om door te gaan.', 'writgocms' ),
+			'SUBSCRIPTION_CANCELED' => __( 'Je abonnement is geannuleerd. Heractiveer je abonnement om door te gaan.', 'writgocms' ),
 		);
 
 		// Use Dutch message if available, otherwise use API message or generic message.
@@ -397,12 +397,14 @@ class WritgoCMS_API_Client {
 		}
 
 		// Also clear credit history caches (pattern match).
+		// Use WordPress options API with pattern matching.
 		global $wpdb;
+		$pattern = $wpdb->esc_like( 'writgocms_cached_credit_history_' ) . '%';
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query(
 			$wpdb->prepare(
 				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-				'writgocms_cached_credit_history_%'
+				$pattern
 			)
 		);
 	}

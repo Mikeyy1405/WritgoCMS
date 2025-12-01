@@ -1471,7 +1471,10 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log('Credit load failed:', error);
+                    // Silently fail - credit display is non-critical
+                    if (typeof console !== 'undefined' && console.warn && writgocmsAiml.debug) {
+                        console.warn('Credit load failed:', error);
+                    }
                 }
             });
         },

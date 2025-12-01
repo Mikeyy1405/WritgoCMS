@@ -92,7 +92,8 @@ class WritgoCMS_Credit_History_Page {
 
 		$api_client = WritgoCMS_API_Client::get_instance();
 		
-		// Get pagination parameters.
+		// Get pagination parameters (already sanitized by max and absint).
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is a GET parameter for pagination, nonce not required for read-only operations.
 		$paged = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
 		$per_page = 50;
 		$offset = ( $paged - 1 ) * $per_page;
