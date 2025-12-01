@@ -2719,3 +2719,193 @@
         border-color: #334155;
     }
 }
+
+/* ==========================================================================
+   AI Service Status & Usage Dashboard
+   ========================================================================== */
+
+/* Service Status Card */
+.aiml-service-status {
+    position: relative;
+}
+
+.service-status-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.service-status-card.status-active {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border: 1px solid #10b981;
+}
+
+.service-status-card.status-inactive {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #f59e0b;
+}
+
+.status-indicator {
+    flex: 1;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.status-badge.success {
+    background: #10b981;
+    color: #fff;
+}
+
+.status-badge.warning {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.status-description {
+    margin: 0;
+    font-size: 14px;
+    color: #475569;
+}
+
+/* Dashboard Service Status (small badge in dashboard) */
+.dashboard-service-status {
+    margin-bottom: 15px;
+}
+
+.dashboard-service-status .status-badge {
+    padding: 5px 12px;
+    font-size: 12px;
+}
+
+/* Usage Dashboard */
+.usage-dashboard {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.usage-dashboard h3 {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    color: #0f172a;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.usage-stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .usage-stats-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.usage-stat {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.usage-label {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.usage-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1877F2;
+}
+
+/* Usage Progress Bar */
+.usage-progress-container {
+    margin-top: 15px;
+}
+
+.usage-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.usage-progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #1877F2 0%, #3b82f6 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.usage-reset-info {
+    margin: 10px 0 0 0;
+    font-size: 12px;
+    color: #64748b;
+    text-align: right;
+}
+
+/* Dark Mode for Usage Dashboard */
+@media (prefers-color-scheme: dark) {
+    .service-status-card.status-active {
+        background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+        border-color: #10b981;
+    }
+
+    .service-status-card.status-inactive {
+        background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+        border-color: #f59e0b;
+    }
+
+    .status-description {
+        color: #cbd5e1;
+    }
+
+    .usage-dashboard {
+        background: #1e293b;
+        border-color: #334155;
+    }
+
+    .usage-dashboard h3 {
+        color: #f1f5f9;
+        border-color: #475569;
+    }
+
+    .usage-stat {
+        background: #334155;
+    }
+
+    .usage-label {
+        color: #94a3b8;
+    }
+
+    .usage-value {
+        color: #60a5fa;
+    }
+
+    .usage-progress-bar {
+        background: #475569;
+    }
+
+    .usage-reset-info {
+        color: #94a3b8;
+    }
+}

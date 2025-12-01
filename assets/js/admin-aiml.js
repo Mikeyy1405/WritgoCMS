@@ -16,13 +16,13 @@
 
         init: function() {
             this.bindPasswordToggles();
-            this.bindApiValidation();
             this.bindRangeInputs();
             this.bindTestInterface();
             this.bindContentPlanner();
             this.loadSavedPlans();
             this.bindSiteAnalysis();
             this.bindContentGeneration();
+            this.loadUsageStats();
         },
 
         /**
@@ -44,50 +44,48 @@
         },
 
         /**
-         * Bind API validation buttons
+         * Load usage stats from REST API
          */
-        bindApiValidation: function() {
+        loadUsageStats: function() {
             var self = this;
+            var $dashboard = $('#usage-dashboard');
+            
+            if (!$dashboard.length || !writgocmsAiml.restUrl) {
+                return;
+            }
 
-            $('#validate-aimlapi-key').on('click', function() {
-                var $button = $(this);
-                var $status = $button.siblings('.validation-status');
-                var $input = $('#writgocms_aimlapi_key');
-                var apiKey = $input.val();
-
-                if (!apiKey) {
-                    self.showNotification(writgocmsAiml.i18n.error + ': API sleutel is vereist', 'error');
-                    return;
-                }
-
-                $button.prop('disabled', true);
-                $status.text(writgocmsAiml.i18n.validating).removeClass('valid invalid').addClass('validating');
-
-                $.ajax({
-                    url: writgocmsAiml.ajaxUrl,
-                    type: 'POST',
-                    data: {
-                        action: 'writgocms_validate_api_key',
-                        nonce: writgocmsAiml.nonce,
-                        api_key: apiKey
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $status.text(writgocmsAiml.i18n.valid).removeClass('validating invalid').addClass('valid');
-                            self.showNotification(writgocmsAiml.i18n.success + ' API sleutel gevalideerd!', 'success');
-                        } else {
-                            $status.text(writgocmsAiml.i18n.invalid).removeClass('validating valid').addClass('invalid');
-                            self.showNotification(response.data.message, 'error');
+            $.ajax({
+                url: writgocmsAiml.restUrl + 'usage',
+                type: 'GET',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-WP-Nonce', writgocmsAiml.restNonce);
+                },
+                success: function(response) {
+                    if (response) {
+                        $('#requests-used').text(response.requests_used || 0);
+                        $('#requests-remaining').text(response.requests_remaining || 0);
+                        $('#daily-limit').text(response.daily_limit || 0);
+                        
+                        // Update progress bar
+                        var percentage = 0;
+                        if (response.daily_limit > 0) {
+                            percentage = (response.requests_used / response.daily_limit) * 100;
                         }
-                    },
-                    error: function() {
-                        $status.text(writgocmsAiml.i18n.error).removeClass('validating valid').addClass('invalid');
-                        self.showNotification('Verbindingsfout', 'error');
-                    },
-                    complete: function() {
-                        $button.prop('disabled', false);
+                        $('#usage-progress-fill').css('width', Math.min(percentage, 100) + '%');
+                        
+                        // Update reset time
+                        if (response.reset_at) {
+                            var resetDate = new Date(response.reset_at);
+                            $('#reset-time').text(resetDate.toLocaleTimeString('nl-NL'));
+                        }
                     }
-                });
+                },
+                error: function() {
+                    // Silently fail - usage stats are informational only
+                    $('#requests-used').text('-');
+                    $('#requests-remaining').text('-');
+                    $('#daily-limit').text('-');
+                }
             });
         },
 

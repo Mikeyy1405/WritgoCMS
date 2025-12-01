@@ -44,10 +44,20 @@ function writgocms_init() {
 	// Load text domain for translations.
 	load_plugin_textdomain( 'writgocms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
+	// Load Database Schema (for migrations).
+	require_once WRITGOCMS_DIR . 'inc/database/class-writgo-db-schema.php';
+
+	// Check and run database migrations if needed.
+	$db_schema = WritgoCMS_DB_Schema::get_instance();
+	$db_schema->maybe_update();
+
 	// Load License Manager first (foundation for everything).
 	require_once WRITGOCMS_DIR . 'inc/class-license-manager.php';
 	require_once WRITGOCMS_DIR . 'inc/class-plugin-updater.php';
 	require_once WRITGOCMS_DIR . 'inc/admin-license-settings.php';
+
+	// Load AIML Proxy (secure server-side API proxy).
+	require_once WRITGOCMS_DIR . 'inc/api/class-writgo-aiml-proxy.php';
 
 	// Load AIML Integration files.
 	require_once WRITGOCMS_DIR . 'inc/class-aiml-provider.php';
@@ -75,6 +85,11 @@ add_action( 'plugins_loaded', 'writgocms_init' );
  * @return void
  */
 function writgocms_activate() {
+	// Create API usage tracking tables.
+	require_once WRITGOCMS_DIR . 'inc/database/class-writgo-db-schema.php';
+	$db_schema = WritgoCMS_DB_Schema::get_instance();
+	$db_schema->create_tables();
+
 	// Create GSC database tables.
 	require_once WRITGOCMS_DIR . 'inc/class-gsc-provider.php';
 	require_once WRITGOCMS_DIR . 'inc/class-gsc-data-handler.php';
