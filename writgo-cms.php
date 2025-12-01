@@ -60,6 +60,9 @@ function writgocms_init() {
 	// Load License Manager (legacy support - will use AuthManager).
 	require_once WRITGOCMS_DIR . 'inc/class-license-manager.php';
 	require_once WRITGOCMS_DIR . 'inc/admin-license-settings.php';
+
+	// Auto-authenticate with API on admin load using WordPress user.
+	add_action( 'admin_init', 'writgocms_auto_authenticate' );
 	
 	// Initialize plugin updater
 	if ( is_admin() ) {
@@ -123,6 +126,28 @@ function writgocms_init() {
 	WritgoCMS_Setup_Wizard::get_instance();
 }
 add_action( 'plugins_loaded', 'writgocms_init' );
+
+/**
+ * Auto-authenticate with API using WordPress user.
+ *
+ * Called on admin_init to ensure user has a valid API session.
+ *
+ * @return void
+ */
+function writgocms_auto_authenticate() {
+	// Only for users with manage_options capability.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$auth_manager = WritgoCMS_Auth_Manager::get_instance();
+
+	// Check if we have a valid API session.
+	if ( ! $auth_manager->has_valid_session() ) {
+		// Auto-authenticate with API using WordPress credentials.
+		$auth_manager->authenticate_with_api();
+	}
+}
 
 /**
  * Plugin activation hook.
