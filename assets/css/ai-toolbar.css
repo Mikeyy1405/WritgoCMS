@@ -1,0 +1,457 @@
+/**
+ * AI Toolbar Styles
+ *
+ * Styles for the WritgoAI toolbar, selection popup, and sidebar.
+ *
+ * @package WritgoCMS
+ */
+
+/* =====================================================
+   Selection Toolbar
+   ===================================================== */
+
+.writgoai-selection-toolbar {
+    position: fixed;
+    z-index: 100000;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-width: 280px;
+}
+
+.writgoai-selection-toolbar::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+}
+
+.writgoai-toolbar-inner {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.writgoai-toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1e1e1e;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.writgoai-toolbar-btn:hover {
+    background: #f0f0f1;
+    color: #1877F2;
+}
+
+.writgoai-toolbar-btn:active {
+    background: #e0e0e1;
+}
+
+.writgoai-toolbar-btn .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.writgoai-toolbar-btn .btn-text {
+    display: inline;
+}
+
+/* Dropdown */
+.writgoai-toolbar-dropdown {
+    position: relative;
+}
+
+.writgoai-dropdown-toggle .dropdown-arrow {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+}
+
+.writgoai-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 4px;
+    min-width: 140px;
+    display: none;
+    z-index: 1;
+}
+
+.writgoai-toolbar-dropdown.is-open .writgoai-dropdown-menu {
+    display: block;
+    animation: fadeIn 0.15s ease;
+}
+
+.writgoai-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #1e1e1e;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.writgoai-dropdown-item:hover {
+    background: #f0f0f1;
+    color: #1877F2;
+}
+
+.writgoai-dropdown-item .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Loading State */
+.writgoai-toolbar-loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    color: #666;
+    font-size: 13px;
+}
+
+.writgoai-toolbar-loading .spinner {
+    margin: 0;
+}
+
+/* Result State */
+.writgoai-toolbar-result {
+    padding: 12px;
+    max-width: 400px;
+}
+
+.writgoai-toolbar-result .result-preview {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    word-break: break-word;
+}
+
+.writgoai-toolbar-result .error-message {
+    color: #d63638;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.writgoai-toolbar-result .error-message .dashicons {
+    font-size: 16px;
+}
+
+.writgoai-toolbar-result .result-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.writgoai-result-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.writgoai-result-btn.apply {
+    background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
+    color: #fff;
+}
+
+.writgoai-result-btn.apply:hover {
+    background: linear-gradient(135deg, #0d5bbd 0%, #094a9e 100%);
+}
+
+.writgoai-result-btn.cancel {
+    background: #f0f0f1;
+    color: #666;
+}
+
+.writgoai-result-btn.cancel:hover {
+    background: #e0e0e1;
+    color: #333;
+}
+
+/* =====================================================
+   Sidebar Panel Styles
+   ===================================================== */
+
+.writgoai-sidebar-btn {
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 8px !important;
+}
+
+.writgoai-sidebar-btn .components-spinner {
+    margin-right: 8px;
+}
+
+/* Result Preview */
+.writgoai-result-preview {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #333;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.writgoai-meta-result p {
+    margin: 8px 0 0;
+    font-style: italic;
+    color: #666;
+}
+
+/* SEO Result */
+.writgoai-seo-result {
+    font-size: 13px;
+}
+
+.writgoai-seo-result .seo-item {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e1;
+}
+
+.writgoai-seo-result .seo-item:last-child {
+    border-bottom: none;
+}
+
+.writgoai-seo-result strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #1e1e1e;
+}
+
+.writgoai-seo-result p {
+    margin: 0;
+    color: #666;
+}
+
+.writgoai-seo-result ul {
+    margin: 8px 0 0 20px;
+    padding: 0;
+}
+
+.writgoai-seo-result li {
+    margin-bottom: 4px;
+    color: #666;
+}
+
+.writgoai-seo-result .seo-score {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.writgoai-seo-result .seo-score strong {
+    display: inline;
+    color: inherit;
+    font-size: 20px;
+}
+
+/* Usage Bar */
+.writgoai-usage {
+    padding: 8px 0;
+}
+
+.writgoai-usage .usage-bar {
+    height: 8px;
+    background: #e0e0e1;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.writgoai-usage .usage-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.writgoai-usage .usage-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+
+/* Modal Actions */
+.writgoai-modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e1;
+}
+
+/* =====================================================
+   Block Toolbar Dropdown
+   ===================================================== */
+
+.writgoai-block-dropdown .components-dropdown-menu__toggle {
+    padding: 4px !important;
+}
+
+.writgoai-block-dropdown .components-menu-item__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.writgoai-block-dropdown .components-spinner {
+    margin: 0;
+}
+
+/* =====================================================
+   Animations
+   ===================================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   Dark Mode Support
+   ===================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .writgoai-selection-toolbar {
+        background: #1e1e1e;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .writgoai-selection-toolbar::after {
+        border-top-color: #1e1e1e;
+    }
+
+    .writgoai-toolbar-btn {
+        color: #e0e0e0;
+    }
+
+    .writgoai-toolbar-btn:hover {
+        background: #2d2d2d;
+        color: #4dabf7;
+    }
+
+    .writgoai-dropdown-menu {
+        background: #1e1e1e;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .writgoai-dropdown-item {
+        color: #e0e0e0;
+    }
+
+    .writgoai-dropdown-item:hover {
+        background: #2d2d2d;
+        color: #4dabf7;
+    }
+
+    .writgoai-toolbar-result .result-preview {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .writgoai-result-btn.cancel {
+        background: #2d2d2d;
+        color: #aaa;
+    }
+
+    .writgoai-result-btn.cancel:hover {
+        background: #3d3d3d;
+        color: #e0e0e0;
+    }
+}
+
+/* =====================================================
+   Responsive Adjustments
+   ===================================================== */
+
+@media screen and (max-width: 600px) {
+    .writgoai-selection-toolbar {
+        min-width: auto;
+        padding: 4px;
+    }
+
+    .writgoai-toolbar-btn {
+        padding: 6px 8px;
+    }
+
+    .writgoai-toolbar-btn .btn-text {
+        display: none;
+    }
+
+    .writgoai-toolbar-result {
+        max-width: 280px;
+    }
+}
+
+/* =====================================================
+   WordPress Admin Compatibility
+   ===================================================== */
+
+.block-editor-writing-flow .writgoai-selection-toolbar {
+    z-index: 100001;
+}
+
+/* Ensure toolbar appears above block toolbar */
+.components-popover.block-editor-block-list__insertion-point-popover ~ .writgoai-selection-toolbar {
+    z-index: 100002;
+}
