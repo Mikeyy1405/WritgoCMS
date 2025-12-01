@@ -211,7 +211,7 @@ class WritgoCMS_AI_Actions {
 		}
 
 		$prompt = sprintf(
-			'Maak de volgende tekst korter en bondiger terwijl je de belangrijkste punten behoudt. Verwijder overbodige woorden en maak de tekst ongeveer 50%% korter. Geef alleen de verkorte tekst terug, zonder extra uitleg. Tekst: %s',
+			'Maak de volgende tekst korter en bondiger terwijl je de belangrijkste punten behoudt. Verwijder overbodige woorden en maak de tekst ongeveer 50 procent korter. Geef alleen de verkorte tekst terug, zonder extra uitleg. Tekst: %s',
 			$text
 		);
 
@@ -520,12 +520,6 @@ Geef alleen de meta description terug, zonder quotes of extra uitleg.',
 			if ( isset( $status['limits'] ) ) {
 				$usage['daily_limit'] = isset( $status['limits']['daily'] ) ? $status['limits']['daily'] : 1000;
 			}
-		}
-
-		// Try to get usage from AIML proxy.
-		if ( class_exists( 'WritgoCMS_AIML_Proxy' ) ) {
-			$proxy = WritgoCMS_AIML_Proxy::get_instance();
-			// The proxy tracks usage in database, we can make a REST call or access directly.
 		}
 
 		wp_send_json_success( $usage );

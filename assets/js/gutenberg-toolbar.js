@@ -25,7 +25,6 @@
     var Spinner = wp.components.Spinner;
     var Notice = wp.components.Notice;
     var Modal = wp.components.Modal;
-    var ToolbarGroup = wp.blockEditor.BlockControls ? null : null;
     var BlockControls = wp.blockEditor.BlockControls;
     var createHigherOrderComponent = wp.compose.createHigherOrderComponent;
     var addFilter = wp.hooks.addFilter;
@@ -255,8 +254,18 @@
         function applyRewrittenContent() {
             if (!result || result.type !== 'rewrite') return;
 
-            // Convert the new content to blocks
-            var newBlocks = wp.blocks.parse('<!-- wp:paragraph -->\n<p>' + result.content.replace(/\n\n/g, '</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>').replace(/\n/g, '<br>') + '</p>\n<!-- /wp:paragraph -->');
+            // Split the content by paragraphs and create blocks
+            var paragraphs = result.content.split(/\n\n+/);
+            var newBlocks = paragraphs.map(function(paragraph) {
+                if (paragraph.trim()) {
+                    return wp.blocks.createBlock('core/paragraph', {
+                        content: paragraph.replace(/\n/g, '<br>')
+                    });
+                }
+                return null;
+            }).filter(function(block) {
+                return block !== null;
+            });
 
             if (newBlocks && newBlocks.length > 0) {
                 // Replace all content blocks

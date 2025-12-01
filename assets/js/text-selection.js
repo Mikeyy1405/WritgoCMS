@@ -475,8 +475,17 @@
                 selection.removeAllRanges();
                 selection.addRange(this.currentRange);
 
-                // Use execCommand as fallback
-                document.execCommand('insertText', false, newContent);
+                // Use modern Range API to replace content
+                this.currentRange.deleteContents();
+                var textNode = document.createTextNode(newContent);
+                this.currentRange.insertNode(textNode);
+
+                // Collapse selection to end of inserted content
+                selection.removeAllRanges();
+                var newRange = document.createRange();
+                newRange.setStartAfter(textNode);
+                newRange.collapse(true);
+                selection.addRange(newRange);
             } catch (e) {
                 console.error('Error replacing text:', e);
             }
