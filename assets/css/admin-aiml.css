@@ -42,12 +42,13 @@
     line-height: 1.5;
 }
 
-/* Header */
-.aiml-header {
+/* Header - Consistent styling for all pages */
+.aiml-header,
+.writgo-page-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%);
     color: #fff;
     padding: 20px 25px;
     margin: -10px -20px 20px -20px;
@@ -287,7 +288,7 @@
 }
 
 .test-type-btn.active {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%) !important;
     color: #fff !important;
     border: none !important;
 }
@@ -332,7 +333,7 @@
 }
 
 #test-generate {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%) !important;
     border: none !important;
     padding: 12px 30px !important;
     font-size: 15px !important;
@@ -737,7 +738,7 @@
 
 /* Submit Button */
 .submit .button-primary {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%) !important;
     border: none !important;
     padding: 10px 30px !important;
     font-size: 14px !important;
@@ -859,7 +860,7 @@
 }
 
 #generate-topical-map {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%) !important;
     border: none !important;
     color: #fff !important;
     padding: 15px 25px !important;
@@ -979,7 +980,7 @@
 }
 
 .main-topic-header {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%);
     color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -1747,7 +1748,7 @@
 }
 
 .dashboard-feature-card .button-hero {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%) !important;
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%) !important;
     border: none !important;
     color: #fff !important;
     padding: 15px 30px !important;
@@ -1875,7 +1876,7 @@
 
 /* Welcome Box with CTA */
 .writgoai-welcome-box {
-    background: linear-gradient(135deg, #1877F2 0%, #f97316 100%);
+    background: linear-gradient(135deg, #1877F2 0%, #6366f1 100%);
     color: #fff;
     padding: 40px;
     text-align: center;
