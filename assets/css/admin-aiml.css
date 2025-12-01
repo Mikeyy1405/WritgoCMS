@@ -2926,9 +2926,26 @@
    WordPress Admin Menu Styling - Logical Groupings
    ========================================================================== */
 
-/* Add visual separation between menu groups using CSS selector targeting */
+/*
+ * Menu Visual Separators
+ * Note: These selectors use nth-child and href attribute matching because WordPress
+ * doesn't provide hooks for adding custom classes to admin menu items.
+ * If menu items are reordered, these selectors may need to be updated.
+ * Current menu order (as of implementation):
+ * 1. Dashboard
+ * 2. Licentie (Beheer section start)
+ * 3. Website Analyse (Content Tools section start)
+ * 4. Contentplan
+ * 5. Gegenereerde Content
+ * 6. Search Console (SEO Tools section start - if GSC enabled)
+ * 7. CTR Optimalisatie
+ * 8. GSC Instellingen
+ * 9. Statistieken (Beheer section continues)
+ * 10. Instellingen
+ * 11+ Dynamic items (Social Media, License Manager, etc.)
+ */
 
-/* Separator after Dashboard (Licentie comes next as Beheer section) */
+/* Separator after Dashboard (before Licentie) */
 #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li:nth-child(2)::after {
     content: '';
     display: block;
@@ -2937,7 +2954,7 @@
     margin: 8px 12px;
 }
 
-/* Separator after Content Tools section (after Gegenereerde Content, before Statistieken) */
+/* Separator after Content Tools section (after Gegenereerde Content) */
 #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li:nth-child(5)::after {
     content: '';
     display: block;
@@ -2946,8 +2963,8 @@
     margin: 8px 12px;
 }
 
-/* Separator after Licentie (before SEO Tools) */
-#adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href*="writgocms-license"]::after {
+/* Separator after Licentie page (using href matching for maintainability) */
+#adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href$="writgocms-license"]::after {
     content: '';
     display: block;
     position: absolute;
@@ -2958,8 +2975,8 @@
     background: #ddd;
 }
 
-/* Separator before Beheer section (before Statistieken if it's after SEO tools) */
-#adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href*="writgocms-gsc-settings"]::after {
+/* Separator after GSC Settings (using href matching for maintainability) */
+#adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href$="writgocms-gsc-settings"]::after {
     content: '';
     display: block;
     position: absolute;
@@ -2992,8 +3009,8 @@
 @media screen and (max-width: 782px) {
     #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li:nth-child(2)::after,
     #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li:nth-child(5)::after,
-    #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href*="writgocms-license"]::after,
-    #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href*="writgocms-gsc-settings"]::after {
+    #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href$="writgocms-license"]::after,
+    #adminmenu #toplevel_page_writgocms-aiml .wp-submenu li a[href$="writgocms-gsc-settings"]::after {
         margin: 6px 8px;
     }
 }

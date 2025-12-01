@@ -660,7 +660,9 @@ class WritgoCMS_License_Admin {
 				color: #475569;
 			}
 
-			.writgocms-license-page .license-activation-form .button-hero {
+			/* License activation form styling */
+			.writgocms-license-page .license-activation-form .button-primary.button-hero,
+			.writgocms-license-page .button-hero {
 				padding: 12px 24px;
 				font-size: 16px;
 				min-height: 44px;
@@ -696,7 +698,7 @@ class WritgoCMS_License_Admin {
 				border: 1px solid #c3e6cb;
 			}
 
-			/* Planner Card Consistency */
+			/* Consistent Planner Cards */
 			.writgocms-license-page .planner-card {
 				background: #fff;
 				border: 1px solid #e2e8f0;
