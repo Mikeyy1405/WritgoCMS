@@ -67,6 +67,10 @@ function writgocms_init() {
 	require_once WRITGOCMS_DIR . 'inc/gutenberg-aiml-block.php';
 	require_once WRITGOCMS_DIR . 'inc/classic-editor-button.php';
 
+	// Load AI Toolbar for Gutenberg editor.
+	require_once WRITGOCMS_DIR . 'inc/class-ai-actions.php';
+	require_once WRITGOCMS_DIR . 'inc/class-gutenberg-ai.php';
+
 	// Load Social Media Manager files.
 	require_once WRITGOCMS_DIR . 'inc/class-social-media-manager.php';
 	require_once WRITGOCMS_DIR . 'inc/admin-social-media-settings.php';
