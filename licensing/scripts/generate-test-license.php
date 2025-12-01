@@ -61,8 +61,9 @@ try {
     // Genereer license key (tenzij demo)
     if (!$is_demo) {
         $license_key = generate_license_key();
-        // Prefix met TEST- voor duidelijkheid
-        $license_key = 'TEST-' . substr($license_key, 5);
+        // Prefix met TEST- voor duidelijkheid (vervang eerste segment)
+        $parts = explode('-', $license_key);
+        $license_key = 'TEST-' . $parts[1] . '-' . $parts[2] . '-' . $parts[3];
     }
     
     // Check of license key al bestaat

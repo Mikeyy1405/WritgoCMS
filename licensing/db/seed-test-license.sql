@@ -1,7 +1,7 @@
 -- WritgoAI Test License Generator
 -- Run dit script om een test license aan te maken voor development/testing
 -- 
--- BELANGRIJK: Vervang YOUR_EMAIL@EXAMPLE.COM met je eigen email!
+-- BELANGRIJK: Vervang [YOUR_EMAIL] met je eigen email adres hieronder!
 -- 
 -- Gebruik: mysql -u user -p database < seed-test-license.sql
 
@@ -12,7 +12,8 @@ SET @license_key = CONCAT('TEST-',
     UPPER(SUBSTRING(MD5(RAND()), 1, 4))
 );
 
-SET @email = 'YOUR_EMAIL@EXAMPLE.COM';
+-- !!! VERVANG DIT MET JE EMAIL !!!
+SET @email = 'test@example.com'; -- WIJZIG DIT!
 SET @plan = 'pro'; -- starter, pro, of enterprise
 SET @credits = 3000; -- 1000 voor starter, 3000 voor pro, 10000 voor enterprise
 
