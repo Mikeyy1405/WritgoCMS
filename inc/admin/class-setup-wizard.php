@@ -142,10 +142,21 @@ class WritgoCMS_Setup_Wizard {
 			$this->current_step = 1;
 		}
 		
-		$step_file = WRITGOCMS_DIR . 'inc/admin/views/wizard/step-' . absint( $this->current_step ) . '.php';
+		// Map step numbers to their corresponding filenames.
+		$step_files = array(
+			1 => 'step-1-welcome.php',
+			2 => 'step-2-theme.php',
+			3 => 'step-3-audience.php',
+			4 => 'step-4-analysis.php',
+			5 => 'step-5-complete.php',
+		);
 		
-		if ( file_exists( $step_file ) ) {
-			include $step_file;
+		if ( isset( $step_files[ $this->current_step ] ) ) {
+			$step_file = WRITGOCMS_DIR . 'inc/admin/views/wizard/' . $step_files[ $this->current_step ];
+			
+			if ( file_exists( $step_file ) ) {
+				include $step_file;
+			}
 		}
 	}
 
