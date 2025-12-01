@@ -591,7 +591,9 @@ class WritgoCMS_AIML_Proxy {
 		} elseif ( 'image' === $type ) {
 			if ( isset( $body['data'][0]['url'] ) ) {
 				$image_url = $body['data'][0]['url'];
-				$saved     = $this->save_image_to_media_library( $image_url, substr( $body['data'][0]['revised_prompt'] ?? '', 0, 100 ) );
+				$image_title = isset( $body['data'][0]['revised_prompt'] ) ? $body['data'][0]['revised_prompt'] : '';
+				$image_title = is_string( $image_title ) ? substr( $image_title, 0, 100 ) : '';
+				$saved     = $this->save_image_to_media_library( $image_url, $image_title );
 
 				$this->track_usage_stats( $type, $model );
 

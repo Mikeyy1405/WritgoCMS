@@ -133,7 +133,12 @@ class WritgoCMS_AIML_Admin_Settings {
      * Register settings
      */
     public function register_settings() {
-        // AIMLAPI Settings - API key is now handled server-side, removed from user settings.
+        // AIMLAPI Settings - API key is now handled server-side.
+        // Note: The 'writgocms_aimlapi_key' option is kept in the database for backward
+        // compatibility with existing installations. It's used as a fallback by the
+        // AIML provider if no server-side key is configured. The UI for entering the key
+        // has been removed as we now prefer server-side configuration via WRITGO_AIML_API_KEY
+        // constant or environment variable.
         register_setting( 'writgocms_aiml_settings', 'writgocms_default_model', array( 'sanitize_callback' => 'sanitize_text_field' ) );
         register_setting( 'writgocms_aiml_settings', 'writgocms_default_image_model', array( 'sanitize_callback' => 'sanitize_text_field' ) );
         register_setting( 'writgocms_aiml_settings', 'writgocms_text_temperature', array( 'sanitize_callback' => 'floatval' ) );
