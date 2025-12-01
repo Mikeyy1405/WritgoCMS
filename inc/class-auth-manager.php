@@ -2,8 +2,8 @@
 /**
  * Authentication Manager Class
  *
- * Handles user authentication with the WritgoAI API server using email/password.
- * Manages Bearer token storage, refresh, and logout functionality.
+ * Handles user authentication using WordPress logged-in user.
+ * Automatically authenticates with API server using WordPress credentials.
  *
  * @package WritgoCMS
  */
@@ -32,25 +32,18 @@ class WritgoCMS_Auth_Manager {
 	private $api_base_url;
 
 	/**
-	 * Token option key
+	 * API Token option key
 	 *
 	 * @var string
 	 */
-	private $token_option = 'writgocms_auth_token';
+	private $token_option = 'writgocms_api_token';
 
 	/**
-	 * User option key
+	 * License data option key
 	 *
 	 * @var string
 	 */
-	private $user_option = 'writgocms_auth_user';
-
-	/**
-	 * Token expiry option key
-	 *
-	 * @var string
-	 */
-	private $expiry_option = 'writgocms_token_expiry';
+	private $license_option = 'writgocms_license_data';
 
 	/**
 	 * Get instance
@@ -71,16 +64,8 @@ class WritgoCMS_Auth_Manager {
 		// Get API URL from options or use default.
 		$this->api_base_url = get_option( 'writgocms_api_url', 'https://api.writgoai.com' );
 
-		// AJAX handlers for authentication.
-		add_action( 'wp_ajax_writgocms_login', array( $this, 'ajax_login' ) );
-		add_action( 'wp_ajax_writgocms_logout', array( $this, 'ajax_logout' ) );
+		// AJAX handlers for backward compatibility.
 		add_action( 'wp_ajax_writgocms_check_auth', array( $this, 'ajax_check_auth' ) );
-
-		// Admin notices for authentication status.
-		add_action( 'admin_notices', array( $this, 'display_auth_notices' ) );
-
-		// Auto-refresh token on admin pages if near expiry.
-		add_action( 'admin_init', array( $this, 'maybe_refresh_token' ) );
 	}
 
 	/**
@@ -94,178 +79,16 @@ class WritgoCMS_Auth_Manager {
 	}
 
 	/**
-	 * Login with email and password
+	 * Check if user is authenticated (logged into WordPress)
 	 *
-	 * @param string $email    User email.
-	 * @param string $password User password.
-	 * @return array|WP_Error Login result or error.
-	 */
-	public function login( $email, $password ) {
-		// Validate inputs.
-		if ( empty( $email ) || ! is_email( $email ) ) {
-			return new WP_Error( 'invalid_email', __( 'Geldig e-mailadres is verplicht.', 'writgocms' ) );
-		}
-
-		if ( empty( $password ) ) {
-			return new WP_Error( 'invalid_password', __( 'Wachtwoord is verplicht.', 'writgocms' ) );
-		}
-
-		// Make login request to API.
-		$response = wp_remote_post(
-			$this->api_base_url . '/v1/auth/login',
-			array(
-				'timeout' => 30,
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
-				'body'    => wp_json_encode(
-					array(
-						'email'    => $email,
-						'password' => $password,
-					)
-				),
-			)
-		);
-
-		if ( is_wp_error( $response ) ) {
-			return new WP_Error(
-				'login_failed',
-				sprintf(
-					/* translators: %s: error message */
-					__( 'Login mislukt: %s', 'writgocms' ),
-					$response->get_error_message()
-				)
-			);
-		}
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		$code = wp_remote_retrieve_response_code( $response );
-
-		if ( 200 !== $code ) {
-			$error_message = isset( $body['message'] ) ? $body['message'] : __( 'Login mislukt. Controleer je inloggegevens.', 'writgocms' );
-			return new WP_Error( 'login_failed', $error_message );
-		}
-
-		// Validate response data.
-		if ( empty( $body['token'] ) || empty( $body['user'] ) ) {
-			return new WP_Error( 'invalid_response', __( 'Ongeldige server response.', 'writgocms' ) );
-		}
-
-		// Encrypt and store token.
-		$encrypted_token = $this->encrypt_token( $body['token'] );
-		update_option( $this->token_option, $encrypted_token, false );
-
-		// Store user data.
-		$user_data = array(
-			'id'      => isset( $body['user']['id'] ) ? $body['user']['id'] : '',
-			'email'   => isset( $body['user']['email'] ) ? $body['user']['email'] : $email,
-			'name'    => isset( $body['user']['name'] ) ? $body['user']['name'] : '',
-			'company' => isset( $body['user']['company'] ) ? $body['user']['company'] : '',
-		);
-		update_option( $this->user_option, $user_data, false );
-
-		// Store token expiry (default 24 hours if not provided).
-		$expiry_timestamp = isset( $body['expires_at'] ) ? strtotime( $body['expires_at'] ) : time() + DAY_IN_SECONDS;
-		update_option( $this->expiry_option, $expiry_timestamp, false );
-
-		return array(
-			'success' => true,
-			'message' => __( 'Login succesvol!', 'writgocms' ),
-			'user'    => $user_data,
-		);
-	}
-
-	/**
-	 * Logout user
-	 *
-	 * @return array|WP_Error Logout result.
-	 */
-	public function logout() {
-		$token = $this->get_token();
-		$api_logout_success = true;
-
-		// Call logout endpoint if we have a token.
-		if ( ! empty( $token ) ) {
-			$response = wp_remote_post(
-				$this->api_base_url . '/v1/auth/logout',
-				array(
-					'timeout' => 10,
-					'headers' => array(
-						'Content-Type'  => 'application/json',
-						'Authorization' => 'Bearer ' . $token,
-					),
-				)
-			);
-
-			// Check if API logout failed (but continue with local cleanup anyway).
-			if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) >= 400 ) {
-				$api_logout_success = false;
-				// Log the error for debugging.
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					error_log( 'WritgoAI Auth: API logout failed - ' . ( is_wp_error( $response ) ? $response->get_error_message() : 'HTTP ' . wp_remote_retrieve_response_code( $response ) ) );
-				}
-			}
-		}
-
-		// Clear stored authentication data (always do this, even if API call fails).
-		delete_option( $this->token_option );
-		delete_option( $this->user_option );
-		delete_option( $this->expiry_option );
-
-		$message = $api_logout_success 
-			? __( 'Je bent uitgelogd.', 'writgocms' )
-			: __( 'Je bent lokaal uitgelogd. De server kon niet worden bereikt.', 'writgocms' );
-
-		return array(
-			'success' => true,
-			'message' => $message,
-		);
-	}
-
-	/**
-	 * Get stored token (decrypted)
-	 *
-	 * @return string|null Token or null if not found/expired.
-	 */
-	public function get_token() {
-		// Check if token exists and is not expired.
-		if ( ! $this->is_authenticated() ) {
-			return null;
-		}
-
-		$encrypted_token = get_option( $this->token_option, '' );
-		if ( empty( $encrypted_token ) ) {
-			return null;
-		}
-
-		return $this->decrypt_token( $encrypted_token );
-	}
-
-	/**
-	 * Check if user is authenticated
-	 *
-	 * @return bool True if authenticated and token is valid.
+	 * @return bool True if user is logged into WordPress and has manage_options capability.
 	 */
 	public function is_authenticated() {
-		$encrypted_token = get_option( $this->token_option, '' );
-		$expiry          = get_option( $this->expiry_option, 0 );
-
-		if ( empty( $encrypted_token ) || empty( $expiry ) ) {
-			return false;
-		}
-
-		// Check if token has expired.
-		if ( time() >= $expiry ) {
-			// Token expired, clean up.
-			$this->logout();
-			return false;
-		}
-
-		return true;
+		return is_user_logged_in() && current_user_can( 'manage_options' );
 	}
 
 	/**
-	 * Get current user data
+	 * Get current WordPress user
 	 *
 	 * @return array|null User data or null if not authenticated.
 	 */
@@ -274,7 +97,154 @@ class WritgoCMS_Auth_Manager {
 			return null;
 		}
 
-		return get_option( $this->user_option, null );
+		$wp_user = wp_get_current_user();
+		return array(
+			'id'    => $wp_user->ID,
+			'email' => $wp_user->user_email,
+			'name'  => $wp_user->display_name,
+		);
+	}
+
+	/**
+	 * Get authentication data for API calls
+	 * Uses WordPress user email + site URL as identifier
+	 *
+	 * @return array|null Authentication data or null if not authenticated.
+	 */
+	public function get_api_auth() {
+		$user = $this->get_current_user();
+		if ( ! $user ) {
+			return null;
+		}
+
+		return array(
+			'wp_user_id'    => $user['id'],
+			'wp_user_email' => $user['email'],
+			'wp_site_url'   => home_url(),
+			'wp_site_name'  => get_bloginfo( 'name' ),
+		);
+	}
+
+	/**
+	 * Generate a secure token for API authentication
+	 * Based on WordPress user + site + secret
+	 *
+	 * @return string|null Token or null if not authenticated.
+	 */
+	public function get_api_token() {
+		$user = $this->get_current_user();
+		if ( ! $user ) {
+			return null;
+		}
+
+		// Create a hash based on user email, site URL, and WordPress auth salt.
+		// This is a deterministic token that can be validated.
+		$data  = $user['email'] . '|' . home_url();
+		$token = hash_hmac( 'sha256', $data, wp_salt( 'auth' ) );
+
+		return $token;
+	}
+
+	/**
+	 * Get stored API token from WordPress options
+	 *
+	 * @return string|null Token or null if not found.
+	 */
+	public function get_token() {
+		if ( ! $this->is_authenticated() ) {
+			return null;
+		}
+
+		return get_option( $this->token_option, null );
+	}
+
+	/**
+	 * Check if we have a valid API session
+	 *
+	 * @return bool True if we have a valid API token stored.
+	 */
+	public function has_valid_session() {
+		$token = get_option( $this->token_option, '' );
+		return ! empty( $token );
+	}
+
+	/**
+	 * Authenticate with API using WordPress credentials
+	 *
+	 * @return bool True if authentication succeeded, false otherwise.
+	 */
+	public function authenticate_with_api() {
+		if ( ! $this->is_authenticated() ) {
+			return false;
+		}
+
+		return $this->ensure_admin_has_license();
+	}
+
+	/**
+	 * Ensure admin has license in API
+	 * Automatically creates/links a user and license in the API
+	 *
+	 * @return bool True if successful, false otherwise.
+	 */
+	public function ensure_admin_has_license() {
+		$user = $this->get_current_user();
+		if ( ! $user ) {
+			return false;
+		}
+
+		// Call API to ensure user has license.
+		$response = wp_remote_post(
+			$this->api_base_url . '/v1/auth/wordpress',
+			array(
+				'timeout' => 30,
+				'headers' => array( 'Content-Type' => 'application/json' ),
+				'body'    => wp_json_encode(
+					array(
+						'wp_user_id'    => $user['id'],
+						'wp_user_email' => $user['email'],
+						'wp_user_name'  => $user['name'],
+						'wp_site_url'   => home_url(),
+						'wp_site_name'  => get_bloginfo( 'name' ),
+						'is_admin'      => current_user_can( 'manage_options' ),
+					)
+				),
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			// Log error for debugging.
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'WritgoAI Auth: API authentication failed - ' . $response->get_error_message() );
+			}
+			return false;
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( 200 !== $code && 201 !== $code ) {
+			// Log error for debugging.
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				$error_message = isset( $body['message'] ) ? $body['message'] : 'Unknown error';
+				error_log( 'WritgoAI Auth: API authentication failed - HTTP ' . $code . ': ' . $error_message );
+			}
+			return false;
+		}
+
+		if ( isset( $body['success'] ) && $body['success'] ) {
+			// Store the token for future API calls.
+			if ( isset( $body['token'] ) ) {
+				update_option( $this->token_option, $body['token'], false );
+			}
+			// Store license data.
+			if ( isset( $body['license'] ) ) {
+				update_option( $this->license_option, $body['license'], false );
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -292,181 +262,6 @@ class WritgoCMS_Auth_Manager {
 		return array(
 			'Authorization' => 'Bearer ' . $token,
 		);
-	}
-
-	/**
-	 * Refresh token if near expiry
-	 *
-	 * Automatically refreshes the token if it's within 1 hour of expiry.
-	 *
-	 * @return bool True if refreshed successfully or not needed, false on failure.
-	 */
-	public function maybe_refresh_token() {
-		if ( ! $this->is_authenticated() ) {
-			return false;
-		}
-
-		$expiry = get_option( $this->expiry_option, 0 );
-
-		// Refresh if within 1 hour of expiry.
-		if ( time() < ( $expiry - HOUR_IN_SECONDS ) ) {
-			return true; // Not needed yet.
-		}
-
-		return $this->refresh_token();
-	}
-
-	/**
-	 * Refresh authentication token
-	 *
-	 * @return bool True if refreshed successfully, false on failure.
-	 */
-	private function refresh_token() {
-		$token = $this->get_token();
-
-		if ( empty( $token ) ) {
-			return false;
-		}
-
-		// Make refresh request to API.
-		$response = wp_remote_post(
-			$this->api_base_url . '/v1/auth/refresh',
-			array(
-				'timeout' => 30,
-				'headers' => array(
-					'Content-Type'  => 'application/json',
-					'Authorization' => 'Bearer ' . $token,
-				),
-			)
-		);
-
-		if ( is_wp_error( $response ) ) {
-			return false;
-		}
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		$code = wp_remote_retrieve_response_code( $response );
-
-		if ( 200 !== $code || empty( $body['token'] ) ) {
-			return false;
-		}
-
-		// Store new token.
-		$encrypted_token = $this->encrypt_token( $body['token'] );
-		update_option( $this->token_option, $encrypted_token, false );
-
-		// Update expiry.
-		$expiry_timestamp = isset( $body['expires_at'] ) ? strtotime( $body['expires_at'] ) : time() + DAY_IN_SECONDS;
-		update_option( $this->expiry_option, $expiry_timestamp, false );
-
-		return true;
-	}
-
-	/**
-	 * Encrypt token for storage
-	 *
-	 * Uses OpenSSL AES-256-CBC encryption for secure token storage.
-	 *
-	 * @param string $token Token to encrypt.
-	 * @return string Encrypted token (base64 encoded).
-	 */
-	private function encrypt_token( $token ) {
-		// Check if OpenSSL is available.
-		if ( ! function_exists( 'openssl_encrypt' ) ) {
-			// Fallback to base64 encoding if OpenSSL not available.
-			// Note: This is not secure, but better than nothing.
-			return base64_encode( $token );
-		}
-
-		// Use WordPress salt as encryption key (hash it to get proper length).
-		$key = hash( 'sha256', wp_salt( 'auth' ), true );
-
-		// Generate a random initialization vector.
-		$iv = openssl_random_pseudo_bytes( openssl_cipher_iv_length( 'aes-256-cbc' ) );
-
-		// Encrypt the token.
-		$encrypted = openssl_encrypt( $token, 'aes-256-cbc', $key, 0, $iv );
-
-		// Combine IV and encrypted data (we need IV for decryption).
-		$result = base64_encode( $iv . $encrypted );
-
-		return $result;
-	}
-
-	/**
-	 * Decrypt token from storage
-	 *
-	 * Decrypts token encrypted with encrypt_token() method.
-	 *
-	 * @param string $encrypted_token Encrypted token (base64 encoded).
-	 * @return string|false Decrypted token or false on failure.
-	 */
-	private function decrypt_token( $encrypted_token ) {
-		// Check if OpenSSL is available.
-		if ( ! function_exists( 'openssl_decrypt' ) ) {
-			// Fallback for base64 encoded tokens (not secure).
-			return base64_decode( $encrypted_token );
-		}
-
-		// Decode the base64 encoded data.
-		$data = base64_decode( $encrypted_token );
-		if ( false === $data ) {
-			return false;
-		}
-
-		// Use WordPress salt as encryption key (hash it to get proper length).
-		$key = hash( 'sha256', wp_salt( 'auth' ), true );
-
-		// Extract IV from the beginning of the data.
-		$iv_length = openssl_cipher_iv_length( 'aes-256-cbc' );
-		$iv        = substr( $data, 0, $iv_length );
-		$encrypted = substr( $data, $iv_length );
-
-		// Decrypt the token.
-		$decrypted = openssl_decrypt( $encrypted, 'aes-256-cbc', $key, 0, $iv );
-
-		return $decrypted;
-	}
-
-	/**
-	 * AJAX handler for login
-	 */
-	public function ajax_login() {
-		check_ajax_referer( 'writgocms_auth_nonce', 'nonce' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Geen toestemming.', 'writgocms' ) ) );
-		}
-
-		$email    = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
-		$password = isset( $_POST['password'] ) ? wp_unslash( $_POST['password'] ) : '';
-
-		$result = $this->login( $email, $password );
-
-		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
-		}
-
-		wp_send_json_success( $result );
-	}
-
-	/**
-	 * AJAX handler for logout
-	 */
-	public function ajax_logout() {
-		check_ajax_referer( 'writgocms_auth_nonce', 'nonce' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Geen toestemming.', 'writgocms' ) ) );
-		}
-
-		$result = $this->logout();
-
-		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
-		}
-
-		wp_send_json_success( $result );
 	}
 
 	/**
@@ -488,26 +283,6 @@ class WritgoCMS_Auth_Manager {
 				'user'          => $user,
 			)
 		);
-	}
-
-	/**
-	 * Display authentication notices in admin
-	 */
-	public function display_auth_notices() {
-		// Only show on plugin pages.
-		$screen = get_current_screen();
-		if ( ! $screen || strpos( $screen->id, 'writgocms' ) === false ) {
-			return;
-		}
-
-		if ( ! $this->is_authenticated() ) {
-			echo '<div class="notice notice-warning is-dismissible">';
-			echo '<p><strong>WritgoAI:</strong> ';
-			echo esc_html__( 'Log in om WritgoAI te gebruiken.', 'writgocms' );
-			echo ' <a href="' . esc_url( admin_url( 'admin.php?page=writgocms-wizard' ) ) . '">';
-			echo esc_html__( 'Inloggen', 'writgocms' );
-			echo '</a></p></div>';
-		}
 	}
 }
 

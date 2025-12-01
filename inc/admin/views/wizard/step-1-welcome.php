@@ -45,84 +45,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<?php
-			// Check if user is authenticated.
-			$auth_manager = WritgoCMS_Auth_Manager::get_instance();
-			$is_authenticated = $auth_manager->is_authenticated();
-			$current_user = $auth_manager->get_current_user();
+			// Get WordPress user.
+			$current_user = wp_get_current_user();
 			?>
 
-			<?php if ( ! $is_authenticated ) : ?>
-				<!-- Login Form -->
-				<div class="auth-section">
-					<h3><?php esc_html_e( 'Log in op je Account', 'writgocms' ); ?></h3>
-					<p class="description">
-						<?php esc_html_e( 'Log in met je WritgoAI account om toegang te krijgen tot alle functies.', 'writgocms' ); ?>
-					</p>
-
-					<form id="wizard-login-form" class="auth-form">
-						<div class="form-field">
-							<label for="wizard-email"><?php esc_html_e( 'E-mailadres', 'writgocms' ); ?></label>
-							<input 
-								type="email" 
-								id="wizard-email" 
-								name="email"
-								class="regular-text" 
-								placeholder="<?php esc_attr_e( 'je@email.nl', 'writgocms' ); ?>"
-								required
-							/>
-						</div>
-
-						<div class="form-field">
-							<label for="wizard-password"><?php esc_html_e( 'Wachtwoord', 'writgocms' ); ?></label>
-							<input 
-								type="password" 
-								id="wizard-password" 
-								name="password"
-								class="regular-text" 
-								placeholder="<?php esc_attr_e( 'Wachtwoord', 'writgocms' ); ?>"
-								required
-							/>
-						</div>
-
-						<div class="form-actions">
-							<button type="submit" id="wizard-login-btn" class="button button-primary button-large">
-								<?php esc_html_e( 'Inloggen', 'writgocms' ); ?>
-							</button>
-							<a href="https://writgo.ai/forgot-password" target="_blank" class="forgot-password-link">
-								<?php esc_html_e( 'Wachtwoord vergeten?', 'writgocms' ); ?>
-							</a>
-						</div>
-
-						<div class="auth-status-message"></div>
-					</form>
-
-					<div class="auth-help">
-						<p>
-							<strong><?php esc_html_e( 'Nog geen account?', 'writgocms' ); ?></strong><br>
-							<a href="https://writgo.ai/register" target="_blank" class="button button-secondary">
-								<?php esc_html_e( 'Account Aanmaken', 'writgocms' ); ?> →
-							</a>
+			<!-- WordPress User Welcome -->
+			<div class="auth-section auth-logged-in">
+				<div class="user-welcome">
+					<span class="welcome-icon">👋</span>
+					<div class="welcome-text">
+						<h3>
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %s: user display name */
+									__( 'Welkom %s!', 'writgocms' ),
+									$current_user->display_name
+								)
+							);
+							?>
+						</h3>
+						<p class="user-email">
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %s: user email address */
+									__( 'Je bent ingelogd als %s.', 'writgocms' ),
+									$current_user->user_email
+								)
+							);
+							?>
+						</p>
+						<p class="description">
+							<?php esc_html_e( 'Laten we WritgoAI instellen voor je website.', 'writgocms' ); ?>
 						</p>
 					</div>
 				</div>
-			<?php else : ?>
-				<!-- Logged In User Info -->
-				<div class="auth-section auth-logged-in">
-					<div class="user-welcome">
-						<span class="welcome-icon">👋</span>
-						<div class="welcome-text">
-							<h3><?php echo esc_html( sprintf( __( 'Welkom terug, %s!', 'writgocms' ), $current_user['name'] ? $current_user['name'] : $current_user['email'] ) ); ?></h3>
-							<p class="user-email"><?php echo esc_html( $current_user['email'] ); ?></p>
-							<?php if ( ! empty( $current_user['company'] ) ) : ?>
-								<p class="user-company"><?php echo esc_html( $current_user['company'] ); ?></p>
-							<?php endif; ?>
-						</div>
-					</div>
-					<p class="description">
-						<?php esc_html_e( 'Je bent ingelogd en klaar om te beginnen met WritgoAI!', 'writgocms' ); ?>
-					</p>
-				</div>
-			<?php endif; ?>
+			</div>
 		</div>
 
 		<div class="wizard-actions">
@@ -130,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php esc_html_e( 'Setup overslaan', 'writgocms' ); ?>
 			</a>
 			<button type="button" class="button button-primary button-hero wizard-next" data-step="1">
-				<?php esc_html_e( 'Volgende Stap', 'writgocms' ); ?> →
+				<?php esc_html_e( 'Aan de slag!', 'writgocms' ); ?> →
 			</button>
 		</div>
 	</div>
