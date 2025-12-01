@@ -138,7 +138,8 @@ class WritgoCMS_Auth_Manager {
 		}
 
 		// Create a hash based on user email, site URL, and WordPress auth salt.
-		$data  = $user['email'] . '|' . home_url() . '|' . time();
+		// This is a deterministic token that can be validated.
+		$data  = $user['email'] . '|' . home_url();
 		$token = hash_hmac( 'sha256', $data, wp_salt( 'auth' ) );
 
 		return $token;
@@ -200,6 +201,7 @@ class WritgoCMS_Auth_Manager {
 				'headers' => array( 'Content-Type' => 'application/json' ),
 				'body'    => wp_json_encode(
 					array(
+						'wp_user_id'    => $user['id'],
 						'wp_user_email' => $user['email'],
 						'wp_user_name'  => $user['name'],
 						'wp_site_url'   => home_url(),
