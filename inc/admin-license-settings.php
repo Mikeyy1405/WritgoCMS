@@ -440,6 +440,7 @@ class WritgoCMS_License_Admin {
 		</div>
 
 		<style>
+			/* Consistent Card Grid */
 			.writgocms-license-page .license-info-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -447,23 +448,31 @@ class WritgoCMS_License_Admin {
 				margin-bottom: 25px;
 			}
 
+			/* License Info Cards - Consistent Styling */
 			.writgocms-license-page .license-info-card {
-				background: #f8f9fa;
+				background: #fff;
+				border: 1px solid #e2e8f0;
 				border-radius: 8px;
-				padding: 15px;
+				padding: 16px;
 				display: flex;
 				align-items: flex-start;
 				gap: 12px;
+				transition: all 0.2s ease;
+			}
+
+			.writgocms-license-page .license-info-card:hover {
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+				transform: translateY(-1px);
 			}
 
 			.writgocms-license-page .license-info-card.status-valid {
-				background: #d4edda;
-				border: 1px solid #c3e6cb;
+				background: #f0fdf4;
+				border-color: #86efac;
 			}
 
 			.writgocms-license-page .license-info-card.status-invalid {
-				background: #f8d7da;
-				border: 1px solid #f5c6cb;
+				background: #fef2f2;
+				border-color: #fca5a5;
 			}
 
 			.writgocms-license-page .info-icon {
@@ -560,25 +569,29 @@ class WritgoCMS_License_Admin {
 			.writgocms-license-page .quick-links-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-				gap: 10px;
+				gap: 12px;
 			}
 
 			.writgocms-license-page .quick-link {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 15px;
-				background: #f8f9fa;
+				padding: 16px;
+				background: #fff;
+				border: 1px solid #e2e8f0;
 				border-radius: 8px;
 				text-decoration: none;
-				color: #212529;
+				color: #1e293b;
 				font-weight: 500;
 				transition: all 0.2s ease;
 			}
 
 			.writgocms-license-page .quick-link:hover {
-				background: #e9ecef;
+				background: #f8fafc;
+				border-color: #1877F2;
+				color: #1877F2;
 				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 			}
 
 			.writgocms-license-page .license-help-section {
@@ -718,6 +731,52 @@ class WritgoCMS_License_Admin {
 			.writgocms-license-page .credits-cost-table td:last-child {
 				text-align: right;
 				color: #0369a1;
+			}
+
+			/* Mobile Responsiveness */
+			@media screen and (max-width: 782px) {
+				.writgocms-license-page .license-info-grid {
+					grid-template-columns: 1fr;
+					gap: 12px;
+				}
+
+				.writgocms-license-page .license-info-card {
+					padding: 14px;
+				}
+
+				.writgocms-license-page .quick-links-grid {
+					grid-template-columns: 1fr;
+					gap: 10px;
+				}
+
+				.writgocms-license-page .license-actions {
+					flex-direction: column;
+					gap: 8px;
+				}
+
+				.writgocms-license-page .license-actions .button {
+					width: 100%;
+					text-align: center;
+				}
+
+				.writgocms-license-page .credits-details {
+					grid-template-columns: 1fr;
+					gap: 10px;
+				}
+
+				.writgocms-license-page .features-list {
+					columns: 1;
+				}
+			}
+
+			@media screen and (max-width: 480px) {
+				.writgocms-license-page .info-value {
+					font-size: 14px;
+				}
+
+				.writgocms-license-page .credits-number {
+					font-size: 36px;
+				}
 			}
 		</style>
 
