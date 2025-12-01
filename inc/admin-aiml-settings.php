@@ -133,8 +133,7 @@ class WritgoCMS_AIML_Admin_Settings {
      * Register settings
      */
     public function register_settings() {
-        // AIMLAPI Settings
-        register_setting( 'writgocms_aiml_settings', 'writgocms_aimlapi_key', array( 'sanitize_callback' => 'sanitize_text_field' ) );
+        // AIMLAPI Settings - API key is now handled server-side, removed from user settings.
         register_setting( 'writgocms_aiml_settings', 'writgocms_default_model', array( 'sanitize_callback' => 'sanitize_text_field' ) );
         register_setting( 'writgocms_aiml_settings', 'writgocms_default_image_model', array( 'sanitize_callback' => 'sanitize_text_field' ) );
         register_setting( 'writgocms_aiml_settings', 'writgocms_text_temperature', array( 'sanitize_callback' => 'floatval' ) );
@@ -204,9 +203,11 @@ class WritgoCMS_AIML_Admin_Settings {
             'writgocms-admin-aiml',
             'writgocmsAiml',
             array(
-                'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( 'writgocms_aiml_nonce' ),
-                'i18n'    => array(
+                'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+                'restUrl'      => esc_url_raw( rest_url( 'writgo/v1/' ) ),
+                'nonce'        => wp_create_nonce( 'writgocms_aiml_nonce' ),
+                'restNonce'    => wp_create_nonce( 'wp_rest' ),
+                'i18n'         => array(
                     // Dutch translations
                     'validating'              => 'Valideren...',
                     'valid'                   => 'Geldig!',
@@ -257,6 +258,10 @@ class WritgoCMS_AIML_Admin_Settings {
                     'export'                  => 'Exporteren',
                     'save'                    => 'Opslaan',
                     'cancel'                  => 'Annuleren',
+                    // Rate limiting / usage
+                    'rateLimitExceeded'       => 'Je hebt je dagelijkse limiet bereikt. Probeer het morgen opnieuw.',
+                    'serviceActive'           => 'AI Service Actief',
+                    'serviceInactive'         => 'AI Service Niet Geconfigureerd',
                 ),
             )
         );
@@ -287,7 +292,7 @@ class WritgoCMS_AIML_Admin_Settings {
 
         $saved_plans = get_option( 'writgocms_saved_content_plans', array() );
         $plans_count = count( $saved_plans );
-        $has_api_key = ! empty( get_option( 'writgocms_aimlapi_key' ) );
+        $service_active = $this->is_ai_service_active();
         $site_analysis = get_option( 'writgocms_site_analysis', array() );
         $has_analysis = ! empty( $site_analysis );
         $content_plan = get_option( 'writgocms_content_plan', array() );
@@ -299,12 +304,16 @@ class WritgoCMS_AIML_Admin_Settings {
             </h1>
 
             <div class="aiml-tab-content">
-                <?php if ( ! $has_api_key ) : ?>
-                <!-- API Key Warning -->
-                <div class="notice notice-warning inline" style="margin-bottom: 20px;">
-                    <p><strong>⚠️ API Sleutel Vereist:</strong> Configureer je API sleutel in de <a href="<?php echo esc_url( admin_url( 'admin.php?page=writgocms-aiml-settings' ) ); ?>">Instellingen</a> om WritgoAI te gebruiken.</p>
+                <!-- AI Service Status -->
+                <div class="dashboard-service-status">
+                    <?php if ( $service_active ) : ?>
+                    <span class="status-badge success">✓ AI Service Actief</span>
+                    <?php else : ?>
+                    <div class="notice notice-warning inline" style="margin-bottom: 20px;">
+                        <p><strong>⚠️ AI Service Niet Geconfigureerd:</strong> Neem contact op met de beheerder om de AI service te configureren.</p>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
 
                 <?php if ( ! $has_analysis ) : ?>
                 <!-- Welcome Screen - First Time -->
@@ -481,11 +490,11 @@ class WritgoCMS_AIML_Admin_Settings {
                         <div class="widget-icon">⚙️</div>
                         <div class="widget-content">
                             <h3>Instellingen</h3>
-                            <p>Configureer je API sleutel en AI model voorkeuren.</p>
-                            <?php if ( ! $has_api_key ) : ?>
-                                <span class="widget-badge warning">API Sleutel Vereist</span>
+                            <p>Configureer je AI model voorkeuren en bekijk je usage.</p>
+                            <?php if ( $service_active ) : ?>
+                                <span class="widget-badge success">Service Actief</span>
                             <?php else : ?>
-                                <span class="widget-badge success">Geconfigureerd</span>
+                                <span class="widget-badge warning">Service Niet Geconfigureerd</span>
                             <?php endif; ?>
                         </div>
                         <a href="<?php echo esc_url( admin_url( 'admin.php?page=writgocms-aiml-settings' ) ); ?>" class="widget-button">
@@ -942,36 +951,66 @@ class WritgoCMS_AIML_Admin_Settings {
         $text_models  = $this->provider->get_text_models();
         $image_models = $this->provider->get_image_models();
         $content_categories = get_option( 'writgocms_content_categories', array( 'informatief', 'reviews', 'top_lijstjes', 'vergelijkingen' ) );
+        
+        // Check if AI service is configured (API key available server-side).
+        $service_active = $this->is_ai_service_active();
         ?>
         <form method="post" action="options.php">
             <?php settings_fields( 'writgocms_aiml_settings' ); ?>
 
-            <!-- API Settings Section -->
+            <!-- AI Service Status Section -->
+            <div class="aiml-settings-section aiml-service-status">
+                <h2>🤖 AI Service Status</h2>
+                
+                <div class="service-status-card <?php echo $service_active ? 'status-active' : 'status-inactive'; ?>">
+                    <div class="status-indicator">
+                        <?php if ( $service_active ) : ?>
+                            <span class="status-badge success">✓ AI Service Actief</span>
+                            <p class="status-description">De AI service is correct geconfigureerd en klaar voor gebruik.</p>
+                        <?php else : ?>
+                            <span class="status-badge warning">⚠️ AI Service Niet Geconfigureerd</span>
+                            <p class="status-description">De AI service moet door een beheerder worden geconfigureerd. Neem contact op met support als je deze melding blijft zien.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Usage Dashboard -->
+                <div class="usage-dashboard" id="usage-dashboard">
+                    <h3>📊 API Gebruik Vandaag</h3>
+                    <div class="usage-stats-container">
+                        <div class="usage-stat">
+                            <span class="usage-label">Requests Gebruikt</span>
+                            <span class="usage-value" id="requests-used">-</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Resterende Requests</span>
+                            <span class="usage-value" id="requests-remaining">-</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Dagelijks Limiet</span>
+                            <span class="usage-value" id="daily-limit">-</span>
+                        </div>
+                    </div>
+                    <div class="usage-progress-container">
+                        <div class="usage-progress-bar">
+                            <div class="usage-progress-fill" id="usage-progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <p class="usage-reset-info">Limiet reset om: <span id="reset-time">-</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Model Settings Section -->
             <div class="aiml-settings-section">
-                <h2>📡 API Instellingen</h2>
+                <h2>🧠 AI Model Instellingen</h2>
                 <p class="description">
-                    Configureer je AIMLAPI sleutel voor toegang tot AI modellen. Verkrijg je API sleutel via
-                    <a href="https://aimlapi.com" target="_blank" rel="noopener noreferrer">aimlapi.com</a>
+                    Selecteer je voorkeurs AI modellen voor tekst- en afbeeldingsgeneratie.
                 </p>
 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="writgocms_aimlapi_key">API Sleutel</label>
-                        </th>
-                        <td>
-                            <div class="api-key-field">
-                                <input type="password" id="writgocms_aimlapi_key" name="writgocms_aimlapi_key" value="<?php echo esc_attr( get_option( 'writgocms_aimlapi_key' ) ); ?>" class="regular-text">
-                                <button type="button" class="button toggle-password">👁️</button>
-                                <button type="button" class="button validate-api" id="validate-aimlapi-key">Valideren</button>
-                                <span class="validation-status"></span>
-                            </div>
-                            <p class="description">Je AIMLAPI sleutel voor toegang tot alle AI modellen.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <label for="writgocms_default_model">AI Model</label>
+                            <label for="writgocms_default_model">Tekst AI Model</label>
                         </th>
                         <td>
                             <select id="writgocms_default_model" name="writgocms_default_model">
@@ -1448,6 +1487,36 @@ class WritgoCMS_AIML_Admin_Settings {
             </div>
         </div>
         <?php
+    }
+
+    /**
+     * Check if AI service is active (API key is configured server-side)
+     *
+     * @return bool
+     */
+    private function is_ai_service_active() {
+        // Check wp-config.php constant.
+        if ( defined( 'WRITGO_AIML_API_KEY' ) && WRITGO_AIML_API_KEY ) {
+            return true;
+        }
+
+        // Check environment variable.
+        $env_key = getenv( 'WRITGO_AIML_API_KEY' );
+        if ( $env_key ) {
+            return true;
+        }
+
+        // Check license manager for injected key.
+        if ( class_exists( 'WritgoCMS_License_Manager' ) ) {
+            $license_manager = WritgoCMS_License_Manager::get_instance();
+            $injected_key    = $license_manager->get_injected_api_key();
+
+            if ( ! is_wp_error( $injected_key ) && ! empty( $injected_key ) ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
