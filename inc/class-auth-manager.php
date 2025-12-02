@@ -302,10 +302,13 @@ class WritgoAI_Auth_Manager {
 	/**
 	 * Generate a superuser token
 	 * 
-	 * @return string Superuser token.
+	 * @return string|null Superuser token or null if user not found.
 	 */
 	private function generate_superuser_token() {
 		$user = $this->get_current_user();
+		if ( ! $user ) {
+			return null;
+		}
 		return hash_hmac( 'sha256', $user['email'] . '|' . home_url() . '|superuser', wp_salt( 'auth' ) );
 	}
 
@@ -315,12 +318,14 @@ class WritgoAI_Auth_Manager {
 	 * @return void
 	 */
 	public function maybe_auto_authenticate() {
-		if ( ! $this->is_authenticated() ) {
+		// Check if user is logged into WordPress with manage_options capability.
+		if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
 		// If superuser and no valid session, auto-authenticate.
-		if ( $this->is_superuser() && ! $this->has_valid_session() ) {
+		$user = $this->get_current_user();
+		if ( $user && $this->is_superuser() && ! $this->has_valid_session() ) {
 			$this->ensure_admin_has_license();
 		}
 	}

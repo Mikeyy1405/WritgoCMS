@@ -54,8 +54,8 @@ class WritgoAI_Admin_Controller {
 	 * @param string $hook Current admin page hook.
 	 */
 	public function enqueue_beginner_assets( $hook ) {
-		// Load on all WritgoAI admin pages (both writgoai and legacy writgoai slugs).
-		if ( strpos( $hook, 'writgoai' ) === false && strpos( $hook, 'writgoai' ) === false ) {
+		// Load on all WritgoAI admin pages (both writgoai and legacy writgocms slugs).
+		if ( strpos( $hook, 'writgoai' ) === false && strpos( $hook, 'writgocms' ) === false ) {
 			return;
 		}
 
