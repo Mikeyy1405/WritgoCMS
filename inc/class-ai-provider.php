@@ -156,7 +156,7 @@ class WritgoAI_AI_Provider {
      * @return string
      */
     private function get_api_key() {
-        // For superuser, use a server-side API key or generate requests differently.
+        // For superuser, use server-side configured API key from wp-config or environment.
         if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
             $auth_manager = WritgoAI_Auth_Manager::get_instance();
             

@@ -301,7 +301,7 @@ class WritgoAI_Auth_Manager {
 
 	/**
 	 * Generate a superuser token
-	 * 
+	 *
 	 * @return string|null Superuser token or null if user not found.
 	 */
 	private function generate_superuser_token() {
@@ -314,7 +314,7 @@ class WritgoAI_Auth_Manager {
 
 	/**
 	 * Maybe auto-authenticate superuser on admin init
-	 * 
+	 *
 	 * @return void
 	 */
 	public function maybe_auto_authenticate() {
