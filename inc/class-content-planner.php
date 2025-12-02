@@ -6,7 +6,7 @@
  * Includes sitemap analysis and content gap detection.
  * Nederlandse versie - Dutch interface for WritgoAI.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

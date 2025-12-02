@@ -1,11 +1,11 @@
 <?php
 /**
- * AIML Proxy Class
+ * AI Proxy Class
  *
- * Server-side proxy for secure API communication with AIML API.
+ * Server-side proxy for secure API communication with AI providers.
  * All requests go through this proxy to keep API keys secure.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ class WritgoAI_AI_Proxy {
 	private static $instance = null;
 
 	/**
-	 * AIMLAPI Base URL
+	 * AI API Base URL
 	 *
 	 * @var string
 	 */
@@ -459,7 +459,7 @@ class WritgoAI_AI_Proxy {
 	}
 
 	/**
-	 * Generate text using AIML API
+	 * Generate text using AI API
 	 *
 	 * @param string          $api_key API key.
 	 * @param string          $prompt  Prompt text.
@@ -503,7 +503,7 @@ class WritgoAI_AI_Proxy {
 	}
 
 	/**
-	 * Generate image using AIML API
+	 * Generate image using AI API
 	 *
 	 * @param string          $api_key API key.
 	 * @param string          $prompt  Prompt text.

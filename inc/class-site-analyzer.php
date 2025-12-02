@@ -4,7 +4,7 @@
  *
  * Analyzes WordPress site content, calculates SEO scores, and detects niche/topics.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

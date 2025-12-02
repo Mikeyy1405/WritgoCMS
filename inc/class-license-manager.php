@@ -10,7 +10,7 @@
  * - API key injection at download
  * - Stop paying = stop working
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

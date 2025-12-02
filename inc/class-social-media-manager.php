@@ -5,7 +5,7 @@
  * AI-powered Social Media multi-channel posting with automatic image generation.
  * Nederlandse versie - Dutch interface for WritgoAI.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -4,7 +4,7 @@
  * 
  * Handles automatic plugin updates from GitHub releases.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if (!defined('ABSPATH')) {

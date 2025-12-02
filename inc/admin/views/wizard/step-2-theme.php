@@ -2,7 +2,7 @@
 /**
  * Setup Wizard - Step 2: Website Theme/Niche
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

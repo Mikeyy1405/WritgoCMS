@@ -4,7 +4,7 @@
  *
  * Contains advanced technical settings for power users.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

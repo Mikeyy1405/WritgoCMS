@@ -5,7 +5,7 @@
  * Adds AI-powered toolbar to the Gutenberg editor with text selection,
  * block toolbar, and sidebar panel functionality.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

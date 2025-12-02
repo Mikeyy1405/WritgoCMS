@@ -4,7 +4,7 @@
  *
  * Handles database table creation and migrations for WritgoAI.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

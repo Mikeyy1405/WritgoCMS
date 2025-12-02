@@ -4,7 +4,7 @@
  *
  * Analyzes meta content and suggests improvements using AI.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

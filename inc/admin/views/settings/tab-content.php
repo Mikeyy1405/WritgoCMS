@@ -4,7 +4,7 @@
  *
  * Contains content planning and Gutenberg toolbar settings.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

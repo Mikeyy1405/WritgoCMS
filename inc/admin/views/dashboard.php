@@ -4,7 +4,7 @@
  *
  * Simplified dashboard with clear workflow and quick actions.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

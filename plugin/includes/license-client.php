@@ -5,7 +5,7 @@
  * Provides functions to communicate with the WritgoAI Licensing API.
  * Uses WordPress HTTP API for making requests.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

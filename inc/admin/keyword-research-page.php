@@ -4,7 +4,7 @@
  *
  * Interface for keyword research using DataForSEO.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

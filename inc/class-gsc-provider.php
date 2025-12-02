@@ -4,7 +4,7 @@
  *
  * Handles OAuth 2.0 authentication and API communication with Google Search Console.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

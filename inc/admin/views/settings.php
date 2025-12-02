@@ -4,7 +4,7 @@
  *
  * Tabbed interface for all WritgoAI settings.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

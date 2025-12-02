@@ -1,10 +1,10 @@
 <?php
 /**
- * Gutenberg AIML Block Registration
+ * Gutenberg AI Block Registration
  *
  * Register Gutenberg block for AI generation.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -134,7 +134,7 @@ class WritgoAI_Gutenberg_AI_Block {
                 'imageModels'  => $provider->get_image_models(),
                 'i18n'         => array(
                     'blockTitle'       => __( 'AI Content Generator', 'writgoai' ),
-                    'blockDescription' => __( 'Generate text or images using AIMLAPI', 'writgoai' ),
+                    'blockDescription' => __( 'Generate text or images using WritgoAI', 'writgoai' ),
                     'textMode'         => __( 'Text', 'writgoai' ),
                     'imageMode'        => __( 'Image', 'writgoai' ),
                     'promptLabel'      => __( 'Enter your prompt', 'writgoai' ),

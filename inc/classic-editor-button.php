@@ -4,7 +4,7 @@
  *
  * TinyMCE button registration for AI generation.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

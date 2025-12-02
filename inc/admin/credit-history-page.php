@@ -4,7 +4,7 @@
  *
  * Displays credit transaction history and usage details.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

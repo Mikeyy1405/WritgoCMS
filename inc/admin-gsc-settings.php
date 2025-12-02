@@ -4,7 +4,7 @@
  *
  * Admin interface for Google Search Console integration.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

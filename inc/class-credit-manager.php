@@ -9,7 +9,7 @@
  * - Credit checking before AI operations
  * - Dashboard widget integration
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

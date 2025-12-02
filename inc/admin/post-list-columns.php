@@ -4,7 +4,7 @@
  *
  * Adds SEO score, ranking, and traffic columns to the WordPress posts list.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

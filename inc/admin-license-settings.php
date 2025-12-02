@@ -9,7 +9,7 @@
  * - Subscription management
  * - Update checking
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

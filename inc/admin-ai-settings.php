@@ -1,11 +1,11 @@
 <?php
 /**
- * AIML Admin Settings Panel
+ * AI Admin Settings Panel
  *
- * Admin interface for AIMLAPI configuration.
+ * Admin interface for WritgoAI configuration.
  * Nederlandse versie - Dutch interface for WritgoAI.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -139,12 +139,10 @@ class WritgoAI_AI_Admin_Settings {
      * Register settings
      */
     public function register_settings() {
-        // AIMLAPI Settings - API key is now handled server-side.
-        // Note: The 'writgoai_aiapi_key' option is kept in the database for backward
-        // compatibility with existing installations. It's used as a fallback by the
-        // AIML provider if no server-side key is configured. The UI for entering the key
-        // has been removed as we now prefer server-side configuration via WRITGO_AI_API_KEY
-        // constant or environment variable.
+        // AI API Settings - API key is now handled server-side via WritgoAI API server.
+        // The API key is injected by the license manager based on the user's license.
+        // The UI for entering the key has been removed as all AI requests go through
+        // the WritgoAI API server which handles authentication via license verification.
         
         // WritgoAI API Settings.
         register_setting( 'writgoai_ai_settings', 'writgoai_license_key', array( 'sanitize_callback' => 'sanitize_text_field' ) );

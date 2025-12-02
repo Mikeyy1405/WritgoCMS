@@ -4,7 +4,7 @@
  *
  * Contains AI model selection and parameters.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

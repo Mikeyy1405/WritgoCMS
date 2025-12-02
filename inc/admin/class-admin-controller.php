@@ -5,7 +5,7 @@
  * Central controller for admin interface management.
  * Handles routing, enqueuing assets, and coordinating admin components.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

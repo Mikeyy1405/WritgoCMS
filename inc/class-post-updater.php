@@ -4,7 +4,7 @@
  *
  * AI-powered post improvement and SEO optimization with Yoast SEO and Rank Math integration.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

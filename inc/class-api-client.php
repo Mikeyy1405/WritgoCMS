@@ -4,7 +4,7 @@
  *
  * Handles communication with WritgoAI API server for credit management.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -4,7 +4,7 @@
  *
  * Main dashboard for WritgoAI with website health score, stats, and workflow progress.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

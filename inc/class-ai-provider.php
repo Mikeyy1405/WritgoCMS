@@ -1,11 +1,11 @@
 <?php
 /**
- * AIML Provider Class
+ * AI Provider Class
  *
- * AIMLAPI integration for text and image generation.
- * Uses https://api.aimlapi.com/v1 as the unified API endpoint.
+ * AI integration for text and image generation via WritgoAI API server.
+ * The WritgoAI API server handles communication with various AI providers.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,14 +25,14 @@ class WritgoAI_AI_Provider {
     private static $instance = null;
 
     /**
-     * AIMLAPI Base URL
+     * AI API Base URL
      *
      * @var string
      */
     private $api_base_url = 'https://api.aimlapi.com/v1';
 
     /**
-     * Available text models via AIMLAPI
+     * Available text models via AI API
      *
      * @var array
      */
@@ -70,7 +70,7 @@ class WritgoAI_AI_Provider {
     );
 
     /**
-     * Available image models via AIMLAPI
+     * Available image models via AI API
      *
      * @var array
      */
@@ -148,10 +148,10 @@ class WritgoAI_AI_Provider {
     }
 
     /**
-     * Get AIMLAPI key
+     * Get AI API key
      *
-     * This method first tries to get the API key from the license manager
-     * (injected from the licensing server), then falls back to the stored option.
+     * This method gets the API key from the license manager which is injected
+     * from the WritgoAI API server based on the user's license.
      *
      * @return string
      */
@@ -276,7 +276,7 @@ class WritgoAI_AI_Provider {
     }
 
     /**
-     * Generate text using AIMLAPI chat/completions endpoint
+     * Generate text using AI API chat/completions endpoint
      *
      * @param string $prompt   The prompt.
      * @param string $model    The model to use.
@@ -298,7 +298,7 @@ class WritgoAI_AI_Provider {
 
         $api_key = $this->get_api_key();
         if ( empty( $api_key ) ) {
-            return new WP_Error( 'missing_api_key', __( 'AIMLAPI key is not configured. Please go to Settings > WritgoAI AIML to configure your API key.', 'writgoai' ) );
+            return new WP_Error( 'missing_api_key', __( 'AI service is niet beschikbaar. Neem contact op met de beheerder.', 'writgoai' ) );
         }
 
         if ( ! $this->check_rate_limit() ) {
@@ -375,11 +375,11 @@ class WritgoAI_AI_Provider {
             return $result;
         }
 
-        return new WP_Error( 'invalid_response', __( 'Invalid response from AIMLAPI.', 'writgoai' ) );
+        return new WP_Error( 'invalid_response', __( 'Invalid response from AI API.', 'writgoai' ) );
     }
 
     /**
-     * Generate image using AIMLAPI images/generations endpoint
+     * Generate image using AI API images/generations endpoint
      *
      * @param string $prompt   The prompt.
      * @param string $model    The model to use.
@@ -401,7 +401,7 @@ class WritgoAI_AI_Provider {
 
         $api_key = $this->get_api_key();
         if ( empty( $api_key ) ) {
-            return new WP_Error( 'missing_api_key', __( 'AIMLAPI key is not configured. Please go to Settings > WritgoAI AIML to configure your API key.', 'writgoai' ) );
+            return new WP_Error( 'missing_api_key', __( 'AI service is niet beschikbaar. Neem contact op met de beheerder.', 'writgoai' ) );
         }
 
         if ( ! $this->check_rate_limit() ) {
@@ -482,7 +482,7 @@ class WritgoAI_AI_Provider {
             );
         }
 
-        return new WP_Error( 'invalid_response', __( 'Invalid response from AIMLAPI.', 'writgoai' ) );
+        return new WP_Error( 'invalid_response', __( 'Invalid response from AI API.', 'writgoai' ) );
     }
 
     /**
@@ -629,11 +629,11 @@ class WritgoAI_AI_Provider {
             wp_send_json_error( array( 'message' => $valid->get_error_message() ) );
         }
 
-        wp_send_json_success( array( 'message' => __( 'AIMLAPI key is valid!', 'writgoai' ) ) );
+        wp_send_json_success( array( 'message' => __( 'AI API key is valid!', 'writgoai' ) ) );
     }
 
     /**
-     * Validate AIMLAPI key
+     * Validate AI API key
      *
      * @param string $api_key API key.
      * @return bool|WP_Error
@@ -655,7 +655,7 @@ class WritgoAI_AI_Provider {
 
         $code = wp_remote_retrieve_response_code( $response );
         if ( $code >= 400 ) {
-            return new WP_Error( 'invalid_key', __( 'Invalid AIMLAPI key.', 'writgoai' ) );
+            return new WP_Error( 'invalid_key', __( 'Invalid AI API key.', 'writgoai' ) );
         }
 
         return true;

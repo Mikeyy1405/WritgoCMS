@@ -4,7 +4,7 @@
  *
  * Guides new users through initial plugin setup with a step-by-step wizard.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

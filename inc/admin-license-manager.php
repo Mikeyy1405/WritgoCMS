@@ -9,7 +9,7 @@
  * - Manage credits
  * - View activity logs
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

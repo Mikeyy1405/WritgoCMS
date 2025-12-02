@@ -5,7 +5,7 @@
  * Handles user authentication using WordPress logged-in user.
  * Automatically authenticates with API server using WordPress credentials.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

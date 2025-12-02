@@ -4,7 +4,7 @@
  *
  * Settings interface for DataForSEO API credentials.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

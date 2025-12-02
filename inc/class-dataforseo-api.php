@@ -4,7 +4,7 @@
  *
  * Handles API communication with DataForSEO for keyword research.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

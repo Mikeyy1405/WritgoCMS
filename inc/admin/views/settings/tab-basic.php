@@ -4,7 +4,7 @@
  *
  * Contains license, website theme, and audience settings.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Setup Wizard - Step 3: Define Target Audience
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

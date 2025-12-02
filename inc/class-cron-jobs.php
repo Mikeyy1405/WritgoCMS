@@ -4,7 +4,7 @@
  *
  * Handles automated tasks for WritgoAI plugin.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

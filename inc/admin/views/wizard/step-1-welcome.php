@@ -2,7 +2,7 @@
 /**
  * Setup Wizard - Step 1: Welcome
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

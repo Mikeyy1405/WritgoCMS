@@ -5,7 +5,7 @@
  * Adds an AI-powered toolbar to the Gutenberg editor for text rewriting,
  * internal link suggestions, and AI image generation.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

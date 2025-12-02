@@ -4,7 +4,7 @@
  *
  * Handles data storage, sync, and opportunity detection for GSC data.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

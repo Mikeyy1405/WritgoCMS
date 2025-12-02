@@ -4,7 +4,7 @@
  *
  * Handles AI-powered actions for text manipulation, link suggestions, and content generation.
  *
- * @package WritgoCMS
+ * @package WritgoAI
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
