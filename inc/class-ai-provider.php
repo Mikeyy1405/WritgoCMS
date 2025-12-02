@@ -195,6 +195,31 @@ class WritgoAI_AI_Provider {
     }
 
     /**
+     * Get license key for WritgoAI API authentication
+     *
+     * @return string
+     */
+    private function get_license_key_for_api() {
+        $license_key = '';
+        
+        // Get license key from License Manager
+        if ( class_exists( 'WritgoAI_License_Manager' ) ) {
+            $license_manager = WritgoAI_License_Manager::get_instance();
+            $license_key = $license_manager->get_license_key();
+        }
+        
+        // For superuser, generate a special token
+        if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
+            $auth_manager = WritgoAI_Auth_Manager::get_instance();
+            if ( $auth_manager->is_superuser() ) {
+                $license_key = 'superuser:' . $auth_manager->get_api_token();
+            }
+        }
+        
+        return $license_key;
+    }
+
+    /**
      * Check if user is authenticated before allowing AI operations
      *
      * @return bool|WP_Error True if valid, WP_Error if not.
@@ -333,19 +358,7 @@ class WritgoAI_AI_Provider {
         }
 
         // Get license key for API authentication
-        $license_key = '';
-        if ( class_exists( 'WritgoAI_License_Manager' ) ) {
-            $license_manager = WritgoAI_License_Manager::get_instance();
-            $license_key = $license_manager->get_license_key();
-        }
-        
-        // For superuser, generate a special token
-        if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
-            $auth_manager = WritgoAI_Auth_Manager::get_instance();
-            if ( $auth_manager->is_superuser() ) {
-                $license_key = 'superuser:' . $auth_manager->get_api_token();
-            }
-        }
+        $license_key = $this->get_license_key_for_api();
 
         if ( ! $this->check_rate_limit() ) {
             return new WP_Error( 'rate_limited', __( 'Rate limit exceeded. Please try again later.', 'writgoai' ) );
@@ -442,19 +455,7 @@ class WritgoAI_AI_Provider {
         }
 
         // Get license key for API authentication
-        $license_key = '';
-        if ( class_exists( 'WritgoAI_License_Manager' ) ) {
-            $license_manager = WritgoAI_License_Manager::get_instance();
-            $license_key = $license_manager->get_license_key();
-        }
-        
-        // For superuser, generate a special token
-        if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
-            $auth_manager = WritgoAI_Auth_Manager::get_instance();
-            if ( $auth_manager->is_superuser() ) {
-                $license_key = 'superuser:' . $auth_manager->get_api_token();
-            }
-        }
+        $license_key = $this->get_license_key_for_api();
 
         if ( ! $this->check_rate_limit() ) {
             return new WP_Error( 'rate_limited', __( 'Rate limit exceeded. Please try again later.', 'writgoai' ) );
