@@ -21,43 +21,45 @@ $content_tone = get_option( 'writgoai_content_tone', 'professional' );
 <div class="settings-tab-content" id="tab-basic">
 	<h2><?php esc_html_e( 'Basis Instellingen', 'writgoai' ); ?></h2>
 
-	<!-- License Section -->
+	<!-- Authentication Status Section -->
 	<div class="writgo-card">
 		<h3>
-			<?php esc_html_e( 'Activatiecode', 'writgoai' ); ?>
-			<span class="writgo-tooltip" data-tooltip="<?php esc_attr_e( 'Voer je WritgoAI licentie code in om alle functies te gebruiken', 'writgoai' ); ?>">
+			<?php esc_html_e( 'Authenticatie Status', 'writgoai' ); ?>
+			<span class="writgo-tooltip" data-tooltip="<?php esc_attr_e( 'WritgoAI gebruikt WordPress login voor authenticatie', 'writgoai' ); ?>">
 				<span class="dashicons dashicons-info"></span>
 			</span>
 		</h3>
 		
 		<div class="form-field">
-			<label for="writgoai_license_key">
-				<?php esc_html_e( 'Licentie Sleutel', 'writgoai' ); ?>
-			</label>
-			<div class="license-input-group">
-				<input 
-					type="text" 
-					id="writgoai_license_key" 
-					name="writgoai_license_key" 
-					value="<?php echo esc_attr( $license_key ); ?>" 
-					class="regular-text"
-					placeholder="<?php esc_attr_e( 'XXXX-XXXX-XXXX-XXXX', 'writgoai' ); ?>"
-				/>
-				<button type="button" id="validate-license" class="button">
-					<?php esc_html_e( 'Valideren', 'writgoai' ); ?>
-				</button>
+			<?php
+			$current_user = wp_get_current_user();
+			$auth_manager = class_exists( 'WritgoAI_Auth_Manager' ) ? WritgoAI_Auth_Manager::get_instance() : null;
+			$has_session = $auth_manager && $auth_manager->has_valid_session();
+			$is_superuser = $auth_manager && $auth_manager->is_superuser();
+			?>
+			<div class="auth-status-display">
+				<p>
+					<strong><?php esc_html_e( 'Ingelogd als:', 'writgoai' ); ?></strong><br>
+					<?php echo esc_html( $current_user->display_name ); ?> (<?php echo esc_html( $current_user->user_email ); ?>)
+				</p>
+				<?php if ( $has_session ) : ?>
+					<p class="license-status license-valid">
+						<span class="dashicons dashicons-yes-alt"></span>
+						<?php esc_html_e( 'Geauthenticeerd en klaar voor gebruik', 'writgoai' ); ?>
+						<?php if ( $is_superuser ) : ?>
+							<span class="status-badge" style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 3px; margin-left: 8px;">⭐ Superuser</span>
+						<?php endif; ?>
+					</p>
+				<?php else : ?>
+					<p class="license-status license-invalid">
+						<span class="dashicons dashicons-dismiss"></span>
+						<?php esc_html_e( 'Geen actieve API sessie', 'writgoai' ); ?>
+					</p>
+					<p class="description">
+						<?php esc_html_e( 'Vernieuw de pagina om opnieuw te authenticeren met de API server.', 'writgoai' ); ?>
+					</p>
+				<?php endif; ?>
 			</div>
-			<?php if ( $license_status === 'valid' ) : ?>
-				<p class="license-status license-valid">
-					<span class="dashicons dashicons-yes-alt"></span>
-					<?php esc_html_e( 'Licentie actief en geldig', 'writgoai' ); ?>
-				</p>
-			<?php elseif ( $license_status === 'invalid' ) : ?>
-				<p class="license-status license-invalid">
-					<span class="dashicons dashicons-dismiss"></span>
-					<?php esc_html_e( 'Licentie ongeldig', 'writgoai' ); ?>
-				</p>
-			<?php endif; ?>
 		</div>
 	</div>
 

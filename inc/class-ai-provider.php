@@ -150,13 +150,23 @@ class WritgoAI_AI_Provider {
     /**
      * Get AI API key
      *
-     * This method gets the API key from the license manager which is injected
-     * from the WritgoAI API server based on the user's license.
+     * This method gets the API key from the Auth Manager which is obtained
+     * from the WritgoAI API server based on the WordPress user authentication.
      *
      * @return string
      */
     private function get_api_key() {
-        // First, try to get API key from license manager.
+        // First, try to get API key from Auth Manager.
+        if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
+            $auth_manager = WritgoAI_Auth_Manager::get_instance();
+            $api_key = $auth_manager->get_api_key();
+
+            if ( ! empty( $api_key ) ) {
+                return $api_key;
+            }
+        }
+
+        // Fall back to license manager for backward compatibility.
         if ( class_exists( 'WritgoAI_License_Manager' ) ) {
             $license_manager = WritgoAI_License_Manager::get_instance();
             $injected_key = $license_manager->get_injected_api_key();
@@ -171,22 +181,29 @@ class WritgoAI_AI_Provider {
     }
 
     /**
-     * Check if license is valid before allowing AI operations
+     * Check if user is authenticated before allowing AI operations
      *
      * @return bool|WP_Error True if valid, WP_Error if not.
      */
     private function check_license_valid() {
-        if ( ! class_exists( 'WritgoAI_License_Manager' ) ) {
-            return true; // License manager not loaded, allow operation.
+        // Check if user is logged in via WordPress with manage_options capability.
+        if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
+            return new WP_Error(
+                'not_authenticated',
+                __( 'Je moet ingelogd zijn als beheerder om WritgoAI te gebruiken.', 'writgoai' )
+            );
         }
 
-        $license_manager = WritgoAI_License_Manager::get_instance();
-
-        if ( ! $license_manager->is_license_valid() ) {
-            return new WP_Error(
-                'license_invalid',
-                __( 'Je licentie is niet actief. Activeer je licentie om WritgoAI te gebruiken.', 'writgoai' )
-            );
+        // Check if Auth Manager has a valid session.
+        if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
+            $auth_manager = WritgoAI_Auth_Manager::get_instance();
+            
+            if ( ! $auth_manager->has_valid_session() ) {
+                return new WP_Error(
+                    'no_api_session',
+                    __( 'Geen actieve API sessie. Probeer de pagina te vernieuwen.', 'writgoai' )
+                );
+            }
         }
 
         return true;

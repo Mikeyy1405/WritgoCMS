@@ -120,6 +120,29 @@ class WritgoAI_License_Manager {
 	 * @return array License status data.
 	 */
 	public function get_license_status( $force_refresh = false ) {
+		// If user is logged in with manage_options, return valid status via WordPress auth.
+		if ( current_user_can( 'manage_options' ) && class_exists( 'WritgoAI_Auth_Manager' ) ) {
+			$auth_manager = WritgoAI_Auth_Manager::get_instance();
+			
+			// If Auth Manager has a valid session, return valid status.
+			if ( $auth_manager->has_valid_session() ) {
+				$user = $auth_manager->get_current_user();
+				return array(
+					'status'      => 'valid',
+					'message'     => 'WordPress authenticatie actief.',
+					'is_valid'    => true,
+					'expires'     => null,
+					'plan'        => 'wordpress_auth',
+					'plan_name'   => 'WordPress Authenticatie',
+					'features'    => array(),
+					'api_key'     => $auth_manager->get_api_key(),
+					'user_email'  => $user ? $user['email'] : '',
+					'checked_at'  => current_time( 'mysql' ),
+				);
+			}
+		}
+
+		// Fall back to license-based flow.
 		$cached = get_transient( $this->cache_key );
 
 		if ( ! $force_refresh && false !== $cached ) {
@@ -183,11 +206,22 @@ class WritgoAI_License_Manager {
 	}
 
 	/**
-	 * Get injected API key from license server
+	 * Get injected API key from Auth Manager or license server
 	 *
 	 * @return string|WP_Error API key or error.
 	 */
 	public function get_injected_api_key() {
+		// First, try to get API key from Auth Manager (new auth flow).
+		if ( class_exists( 'WritgoAI_Auth_Manager' ) ) {
+			$auth_manager = WritgoAI_Auth_Manager::get_instance();
+			$api_key = $auth_manager->get_api_key();
+
+			if ( ! empty( $api_key ) ) {
+				return $api_key;
+			}
+		}
+
+		// Fall back to license-based flow for backward compatibility.
 		$status = $this->get_license_status();
 
 		if ( ! $status['is_valid'] ) {

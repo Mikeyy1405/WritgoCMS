@@ -159,6 +159,42 @@ class WritgoAI_Auth_Manager {
 	}
 
 	/**
+	 * Get API key from stored token (alias for get_token for compatibility)
+	 *
+	 * @return string|null API key or null if not found.
+	 */
+	public function get_api_key() {
+		return $this->get_token();
+	}
+
+	/**
+	 * Check if current user is superuser
+	 *
+	 * Superuser is determined by email address matching the configured superuser email.
+	 * Default superuser email is 'info@writgo.nl' but can be overridden via constant or filter.
+	 *
+	 * @return bool True if current user is superuser.
+	 */
+	public function is_superuser() {
+		if ( ! $this->is_authenticated() ) {
+			return false;
+		}
+
+		$user = $this->get_current_user();
+		if ( ! $user ) {
+			return false;
+		}
+
+		// Allow configuration via constant.
+		$superuser_email = defined( 'WRITGOAI_SUPERUSER_EMAIL' ) ? WRITGOAI_SUPERUSER_EMAIL : 'info@writgo.nl';
+
+		// Allow filtering the superuser email.
+		$superuser_email = apply_filters( 'writgoai_superuser_email', $superuser_email );
+
+		return strtolower( $user['email'] ) === strtolower( $superuser_email );
+	}
+
+	/**
 	 * Check if we have a valid API session
 	 *
 	 * @return bool True if we have a valid API token stored.

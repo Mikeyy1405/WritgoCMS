@@ -1028,45 +1028,46 @@ class WritgoAI_AI_Admin_Settings {
         <form method="post" action="options.php">
             <?php settings_fields( 'writgoai_ai_settings' ); ?>
 
-            <!-- License & API Settings Section -->
+            <!-- Authentication & API Settings Section -->
             <div class="aiml-settings-section">
-                <h2>🔑 Licentie & API Instellingen</h2>
+                <h2>🔐 Authenticatie & API Instellingen</h2>
                 <p class="description">
-                    Configureer je WritgoAI licentie sleutel voor toegang tot credit-based features.
+                    WritgoAI gebruikt WordPress login voor authenticatie. Je WordPress account bepaalt je toegang.
                 </p>
 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="writgoai_license_key">Licentie Sleutel</label>
+                            WordPress Gebruiker
                         </th>
                         <td>
-                            <input type="text" id="writgoai_license_key" name="writgoai_license_key" value="<?php echo esc_attr( get_option( 'writgoai_license_key', '' ) ); ?>" class="regular-text" placeholder="Voer je licentie sleutel in">
-                            <p class="description">Je WritgoAI licentie sleutel voor credit management en API toegang.</p>
                             <?php
-                            // Show license status if available.
-                            if ( class_exists( 'WritgoAI_API_Client' ) && ! empty( get_option( 'writgoai_license_key' ) ) ) {
-                                $api_client = WritgoAI_API_Client::get_instance();
-                                $status = $api_client->get_subscription_status();
-                                if ( ! is_wp_error( $status ) && isset( $status['status'] ) ) :
-                                    $status_class = ( 'active' === $status['status'] ) ? 'success' : 'warning';
-                                    ?>
-                                    <p>
-                                        <span class="status-badge <?php echo esc_attr( $status_class ); ?>">
-                                            <?php
-                                            if ( 'active' === $status['status'] ) {
-                                                echo '✓ Licentie Actief';
-                                            } else {
-                                                echo '⚠️ Licentie ' . esc_html( ucfirst( $status['status'] ) );
-                                            }
-                                            ?>
-                                        </span>
-                                        <?php if ( ! empty( $status['plan_name'] ) ) : ?>
-                                            - <?php echo esc_html( $status['plan_name'] ); ?>
-                                        <?php endif; ?>
-                                    </p>
-                                <?php endif; ?>
-                            <?php } ?>
+                            $current_user = wp_get_current_user();
+                            $auth_manager = class_exists( 'WritgoAI_Auth_Manager' ) ? WritgoAI_Auth_Manager::get_instance() : null;
+                            $has_session = $auth_manager && $auth_manager->has_valid_session();
+                            $is_superuser = $auth_manager && $auth_manager->is_superuser();
+                            ?>
+                            <p>
+                                <strong><?php echo esc_html( $current_user->display_name ); ?></strong><br>
+                                <span class="description"><?php echo esc_html( $current_user->user_email ); ?></span>
+                            </p>
+                            <?php if ( $has_session ) : ?>
+                                <p>
+                                    <span class="status-badge success">✓ Geauthenticeerd</span>
+                                    <?php if ( $is_superuser ) : ?>
+                                        <span class="status-badge success">⭐ Superuser</span>
+                                    <?php endif; ?>
+                                </p>
+                                <p class="description">Je bent ingelogd en hebt toegang tot de AI services.</p>
+                            <?php else : ?>
+                                <p>
+                                    <span class="status-badge warning">⚠️ Geen API Sessie</span>
+                                </p>
+                                <p class="description">
+                                    Vernieuw de pagina om opnieuw te authenticeren met de API server.
+                                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=writgoai-settings' ) ); ?>" class="button button-small">Pagina Vernieuwen</a>
+                                </p>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <tr>
@@ -1089,10 +1090,14 @@ class WritgoAI_AI_Admin_Settings {
                     <div class="status-indicator">
                         <?php if ( $service_active ) : ?>
                             <span class="status-badge success">✓ AI Service Actief</span>
-                            <p class="status-description">De AI service is correct geconfigureerd en klaar voor gebruik.</p>
+                            <p class="status-description">
+                                De AI service is correct geconfigureerd en klaar voor gebruik via WordPress authenticatie.
+                            </p>
                         <?php else : ?>
-                            <span class="status-badge warning">⚠️ AI Service Niet Geconfigureerd</span>
-                            <p class="status-description">De AI service moet door een beheerder worden geconfigureerd. Neem contact op met support als je deze melding blijft zien.</p>
+                            <span class="status-badge warning">⚠️ AI Service Niet Beschikbaar</span>
+                            <p class="status-description">
+                                Vernieuw de pagina om opnieuw te authenticeren. Als het probleem aanhoudt, controleer of je ingelogd bent als WordPress beheerder met 'manage_options' rechten.
+                            </p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -1721,6 +1726,15 @@ class WritgoAI_AI_Admin_Settings {
      * @return bool
      */
     private function is_ai_service_active() {
+        // Check if user is authenticated via WordPress and has active API session.
+        if ( class_exists( 'WritgoAI_Auth_Manager' ) && current_user_can( 'manage_options' ) ) {
+            $auth_manager = WritgoAI_Auth_Manager::get_instance();
+            
+            if ( $auth_manager->has_valid_session() ) {
+                return true;
+            }
+        }
+
         // Check wp-config.php constant.
         if ( defined( 'WRITGO_AI_API_KEY' ) && WRITGO_AI_API_KEY ) {
             return true;
@@ -1732,7 +1746,7 @@ class WritgoAI_AI_Admin_Settings {
             return true;
         }
 
-        // Check license manager for injected key.
+        // Check license manager for injected key (backward compatibility).
         if ( class_exists( 'WritgoAI_License_Manager' ) ) {
             $license_manager = WritgoAI_License_Manager::get_instance();
             $injected_key    = $license_manager->get_injected_api_key();
