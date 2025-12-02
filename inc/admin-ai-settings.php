@@ -1721,6 +1721,15 @@ class WritgoAI_AI_Admin_Settings {
      * @return bool
      */
     private function is_ai_service_active() {
+        // Check if user is authenticated via WordPress and has active API session.
+        if ( class_exists( 'WritgoAI_Auth_Manager' ) && current_user_can( 'manage_options' ) ) {
+            $auth_manager = WritgoAI_Auth_Manager::get_instance();
+            
+            if ( $auth_manager->has_valid_session() ) {
+                return true;
+            }
+        }
+
         // Check wp-config.php constant.
         if ( defined( 'WRITGO_AI_API_KEY' ) && WRITGO_AI_API_KEY ) {
             return true;
@@ -1732,7 +1741,7 @@ class WritgoAI_AI_Admin_Settings {
             return true;
         }
 
-        // Check license manager for injected key.
+        // Check license manager for injected key (backward compatibility).
         if ( class_exists( 'WritgoAI_License_Manager' ) ) {
             $license_manager = WritgoAI_License_Manager::get_instance();
             $injected_key    = $license_manager->get_injected_api_key();
