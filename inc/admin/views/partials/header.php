@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$page_title = isset( $page_title ) ? $page_title : __( 'WritgoAI', 'writgocms' );
+$page_title = isset( $page_title ) ? $page_title : __( 'WritgoAI', 'writgoai' );
 $page_description = isset( $page_description ) ? $page_description : '';
 ?>
 
